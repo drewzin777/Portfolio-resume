@@ -1,0 +1,43 @@
+body {
+    width: 70%;
+    border: 1px solid black; 
+    font-family: Arial, Helvetica, sans-serif;
+    text-align: center;
+    color: darkred;
+    background-color:beige;
+}
+
+.header--main {
+    font-size: 3em;
+    font-family: Dancing Script; 
+    font-size: 50px;
+    text-shadow: 3px 3px lightgrey;
+
+
+}
+
+.subheader {
+    font-size: 2.5em;
+    font-family: Dancing Script;
+    color: darkred;
+    padding-bottom: 45px;
+    text-shadow: 3px 3px lightgrey;
+}
+
+.p1 {
+    font-family:  Dancing Script, Arial, Helvetica, sans-serif;
+    color: darkred;
+    line-height: 1.5em; 
+    padding-bottom: 30px;
+    font-size: 1.5em;
+    text-shadow: 1px 1px lightgrey;
+}
+
+.p2 {
+    font-family:  Dancing Script,  Arial, Helvetica, sans-serif;
+    font-size: 1.5em;
+    color: darkred;
+    line-height: 1.5em; 
+    padding-bottom: 75px;
+    text-shadow: 1px 1px lightgrey;
+}
