@@ -11,6 +11,7 @@
             padding: 10px;
             font-size: 20px;
             color: brown; 
+            width: 100%
         }
 
         h1 {
@@ -19,8 +20,12 @@
             padding-bottom: 50px;
         }
 
+       #firstName, #lastName {
+        width: 98%;
+        padding: 8px;
+       }
         #phone {
-            margin: 25px;
+           margin: 25px;
         }
 
         #here {
@@ -33,6 +38,15 @@
 
         #kind {
             margin: 25px;
+        }
+
+    button {
+            width: 98%;
+            margin: 20px; 
+            padding: 10px; 
+            font-size: 2em; 
+            background-color: chocolate;
+            border-radius: 10px
         }
     </style>
 </head>
@@ -70,7 +84,9 @@
             <option value="sugar">Sweet n'Low</option> 
             <option value="sugar">Stevia</option> 
             <option value="sugar">Honey</option>
-        </select>
+        </select><br>
+
+        <button id="submit">Submit</button>
     </div>
     
 </body>
