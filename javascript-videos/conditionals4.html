@@ -9,9 +9,9 @@
     <div id="output"></div>
 
     <script>
-        const amount = prompt("How much did the member spend this month in additional chargers?");
-
-        const membershipFee = 500.00;
+        let membershipFee = 500;
+        let amount = prompt("How much did the member spend this month in additional chargers?");
+        amount = parseFloat(amount);
         let taxRate = 0.0625;
         
         let discount = 0;
@@ -44,7 +44,7 @@
        //output resutlts
 
        
-       document.getElementById("output").innerHTML = ` <p>Membership Fee: ${Math.floor(membershipFee)}</p><br> <p>Additional Spent: ${Math.floor(amount)}<p><br><p>Subtotal: ${Math.floor(subTotal)}<p>Discount: ${Math.floor(discountAmount)}</p><br><p>Tax: ${Math.floor(taxAmount)}</p><br><p>Grand Total: ${Math.floor(grandTotal)}</p>`;
+       document.getElementById("output").innerHTML = ` <p>Membership Fee: ${membershipFee.toFixed(2)}</p><br> <p>Additional Spent: ${amount.toFixed(2)}<p><br><p>Subtotal: ${subTotal.toFixed(2)}<p>Discount: ${discountAmount.toFixed(2)}</p><br><p>Tax: ${taxAmount.toFixed(2)}</p><br><p>Grand Total: ${grandTotal.toFixed(2)}</p>`;
        
     </script>
 </body>
