@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tennis Club Recipt</title>
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        const amount = prompt("How much did the member spend this month in additional chargers?");
+
+        const membershipFee = 500.00;
+        let taxRate = 0.0625;
+        
+        let discount = 0;
+        
+
+        //console.log(subtotal);
+
+        if (amount >= 250 && amount <= 500) {
+            discount = 0.10;
+        } else if (amount  >= 501 && amount <= 1000) {
+            discount = 0.125; 
+        } else if (amount  >= 1001 && amount <= 2000) {
+            discount = 0.15;
+        } else if (amount > 2000){
+            discount = 0.20;  
+        }
+        
+
+        //totoal amount before discount and tax
+       let subTotal = membershipFee + amount; 
+
+       //discount to subtotal amount
+       let discountAmount = subTotal * discount; 
+       let finalBill = subTotal - discountAmount; 
+
+       //apply tax to the final bill
+       let taxAmount = finalBill * taxRate; 
+       let grandTotal = finalBill + taxAmount; 
+        
+       //output resutlts
+
+       
+       document.getElementById("output").innerHTML = ` <p>Membership Fee: ${Math.floor(membershipFee)}</p><br> <p>Additional Spent: ${Math.floor(amount)}<p><br><p>Subtotal: ${Math.floor(subTotal)}<p>Discount: ${Math.floor(discountAmount)}</p><br><p>Tax: ${Math.floor(taxAmount)}</p><br><p>Grand Total: ${Math.floor(grandTotal)}</p>`;
+    </script>
+</body>
+</html>
