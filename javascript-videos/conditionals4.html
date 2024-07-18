@@ -4,6 +4,15 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Tennis Club Recipt</title>
+    <style>
+        body { 
+            border: 1px solid black;
+            padding: 15px;
+            background-color: honeydew;
+            font-family: Arial, Helvetica, sans-serif;
+            color: slategrey;
+        }
+    </style>
 </head>
 <body>
     <div id="output"></div>
@@ -44,7 +53,7 @@
        //output resutlts
 
        
-       document.getElementById("output").innerHTML = ` <p>Membership Fee: ${membershipFee.toFixed(2)}</p><br> <p>Additional Spent: ${amount.toFixed(2)}<p><br><p>Subtotal: ${subTotal.toFixed(2)}<p>Discount: ${discountAmount.toFixed(2)}</p><br><p>Tax: ${taxAmount.toFixed(2)}</p><br><p>Grand Total: ${grandTotal.toFixed(2)}</p>`;
+       document.getElementById("output").innerHTML = ` <p>Membership Fee: ${membershipFee.toFixed(2)}</p><p>Additional Spent: ${amount.toFixed(2)}<p><p>Subtotal: ${subTotal.toFixed(2)}<p>Discount: ${discountAmount.toFixed(2)}</p><p>Tax: ${taxAmount.toFixed(2)}</p><p>Grand Total: ${grandTotal.toFixed(2)}</p>`;
        
     </script>
 </body>
