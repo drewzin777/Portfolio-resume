@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Switch 4</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: larger;
+            line-height: 2em;
+            border: 2px solid orange;
+            padding: 15px;
+            background-color: darkseagreen;
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <h1>Fruit Menu</h1>
+    <p>1. Apple.............$1.25ea.<br>
+       2. Pear..............$.085ea.<br>
+       3. Orange............$1.00ea.<br>
+       4. Grapes............$3.99/Lb<br>
+       5. Stawberries.......$3.99/Lb<br>
+       6. Kiwi..............$0.79ea.<br> 
+       7. Banana........$0.29/ea.
+
+     <script>
+        let choose = prompt("Choose a fruit (1-7)");
+        let fruitPrice; 
+        let fruitName; 
+
+        switch (choose) {
+            case "1": 
+                fruitName = "Apple"; 
+                fruitPrice = 1.25;
+                console.log("Apple");
+                break;
+            case "2": 
+                fruitName = "Pear"; 
+                fruitPrice = .85;
+                console.log("Pear"); 
+                break;
+            case "3": 
+                fruitName = "Orange"; 
+                fruitPrice = 1.00;
+                console.log("Orange"); 
+                break;
+            case "4": 
+                fruitName = "Grapes"; 
+                fruitPrice = 3.99;
+                console.log("Grapes"); 
+                break;
+            case "5": 
+                fruitName = "Strawberries"; 
+                fruitPrice = 3.99;
+                console.log("Strawberries"); 
+                break;
+            case "6": 
+                fruitName = "Kiwi"; 
+                fruitPrice = 0.79;
+                console.log("Kiwi"); 
+                break;
+            case "7": 
+                fruitName = "Banana"; 
+                fruitPrice = .296;
+                console.log("Banana");
+        }
+
+        let userInput = prompt("How many would you like?");
+        let userAmount = parseFloat(userInput);
+        let numberOfFruits = parseFloat(userInput);
+
+        if (isNaN(numberOfFruits) || numberOfFruits <= 1 || numberOfFruits  >= 100) {
+            alert("Please enter a valid number of fruits between 1 and 7");
+        } else {
+            let totalPrice = numberOfFruits * fruitPrice;
+
+            document.getElementById("output").innerHTML  = "The total is: $" + totalPrice.toFixed(2);
+        }
+
+      
+        
+     </script>
+</body> 
+</html>
