@@ -40,4 +40,4 @@ console.log(greeting());
 let length = prompt("Length?"); 
 let width = prompt("Width?");
 
-//document.getElementById("output").innerHTML = rectangleArea(length, width);
+document.getElementById("output").innerHTML = rectangleArea(length, width);
