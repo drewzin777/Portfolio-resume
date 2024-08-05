@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Strings</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        textarea {
+            width: 100%; 
+            font-size: 1.15em;
+            display: block;
+            height: 100px; 
+            margin-bottom: 20px; 
+            background-color: lightgray;
+        }
+
+        #output {
+            margin-top: 20px;
+        }
+
+        button {
+            padding:10px 20px; 
+            margin: 5px; 
+            border: none; 
+            border-radius: 4px;
+            cursor: pointer; 
+            background-color: #007bff;
+            color: #fff; 
+            font-size: 16px;
+        }
+
+        button:hover {
+            background: #0056b3;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        
+        <h1>String Manipulator</h1>
+        <p>Enter your string here...</p>
+        <textarea id="userString"></textarea>
+        <button id="btnStringLength">String Length</button>
+        <button id="btnToUpperCase">Uppercase</button>
+        <button id="btnToLowerCase">Lowercase</button>
+        <button id="btnTrim">Trim</button>
+        <button id="btnReverse">Reverse</button>
+        <button id="btnReset">Reset</button>
+        <div id="output"></div> 
+        </div>
+    </div>   
+    <script src="strings.js"></script>
+</body>
+</html>
