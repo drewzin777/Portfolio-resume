@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mad Libs Game (template literals)</title>
+    <style>
+        body {
+           
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: large;
+            border: 2px dashed rgba(3, 69, 87, 0.857);
+            margin: 20px;
+            padding: 20px;
+            background-color: lightgrey;
+        }   
+        
+        .modal {
+            display: none; 
+            position: fixed; 
+            z-index: 1; 
+            left: 0; 
+            top: 0; 
+            width: 100%; 
+            height: 100%; 
+            overflow: auto; 
+            background-color: rgb(0,0,0);
+            background-color: rgba(0,0,0,0.4);
+            padding-top: 60px;
+        }
+
+        .modal-content {
+            background-color: #fefefe;
+            margin: 5% auto;
+            padding: 20px; 
+            border: 1px solid #888; 
+            width: 80%; 
+        }
+
+        .close:hover, .close:focus {
+            color:black; 
+            text-decoration: none;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <h1>Mad Lib Form</h1>
+    <form id="madLibForm">
+        <label for="noun">Noun:</label>
+        <select id="noun" name="noun" required>
+            <option value="">--Select a Noun--</option>
+            <option value="dog">Dog</option> 
+            <option value="cat">Cat</option> 
+            <option value="bird">Bird</option> 
+            <option value="car">Car</option> 
+            <option value="house">House</option>
+        </select><br><br>
+
+        <label for="verb">Verb:</label>
+        <select id="verb" name="verb" required>
+            <option value="">--Select a Verb--</option>
+            <option value="run">Run</option> 
+            <option value="jump">Jump</option> 
+            <option value="swim">Swim</option> 
+            <option value="sing">Sing</option> 
+            <option value="fly">Fly</option>
+        </select><br><br>
+
+        <label for="adjective">Adjective:</label>
+        <select id="adjective" name="adjective" required>
+            <option value="">--Select a Adjective--</option>
+            <option value="happy">Happy</option> 
+            <option value="sad">Sad</option> 
+            <option value="quick">Quick</option> 
+            <option value="bright">Bright</option> 
+            <option value="dark">Dark</option>
+        </select><br><br>
+
+        <input type="button" value="Generate Mad Lib" onclick="generateMadLib()">
+    </form>
+
+    <!-- The Modal -->
+    <div id="myModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2>Your Mad Lib:</h2>
+            <p id="madLibOutput"></p>
+        </div>
+    </div>
+        
+    <script src="template.js"></script>
+</body>
+</html>
