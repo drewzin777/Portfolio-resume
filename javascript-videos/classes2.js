@@ -4,74 +4,54 @@ class Vehicle {
         this.capacity = capacity;
         this.route = route;
         this.type = type; 
-        this.passengers = [];
+        this.passengers = [];      //Array to hold passengers on vehicle
     }
 
-    display() {
-        return `Type: ${this.type}, Number: ${this.number}, Capacity: ${this.capacity}`;
-    }
-
-
+    
     addPassenger(passenger) {
-        if (this.passengers.length >= this.capacity) {
-            return `Cannot add passenger, vehicle ${this.number} is full.`;
-        } else if (passenger.onVehicle) {
-            return `${passenger.name} is already on a vehicle.`;
+        if(this.passengers.length < this.capacity) {
+            this.passengers.push(passenger);
+            passenger.onVehicle = true;
         } else {
-            this.passengers.push(passenger); 
-            passenger.onVehicle = true; 
-            return `${passenger.name} added to vehicle ${this.number}.`;
+            alert ('Vehicle is at full capacity.');
         }
+            
     }
-
-    removePassenger(passenger) {
-        const index = this.passengers.indexOf(passenger); 
-        if(index > -1) {
-            this.passengers.splice(index, 1); 
-            passenger.onVehicle = false; 
-            return `${passenger.name} removed from vehicle ${this.number}.`;
-        } else {
-            return `${passenger.name} is not on this vehicle.`
+        
+    removePassenger() {
+        const removedPassenger = this.passengers.pop();  //this only removes the last person added
+        if (removedPassenger) {
+            removedPassenger.onVehicle = false;
         }
-     }
-
-     listPassengers() {
-        return this.passengers.map(p => `${p.name}, Destination: ${p.destination}`).join(`<br>`);
-     }
-
-     static listVehicles(vehicles) {
-        return vehicles.map(vehicle => vehicle.display()).join('<br>'); 
-     }
+        return removedPassenger;
+        }
 }
 
+
+//Subclasses for vehicles
     class Bus extends Vehicle {
-        constructor(number, capacity, route, type = "Bus", stops = []) {
-            super(number, capacity, route, type); 
-            this.stops = stops;
-        }
-           
+        constructor(number, capacity, route, busType) {
+            super(number, capacity, route, `Bus`); 
+            this.busType = busType;
+        }     
     }
 
     class Train extends Vehicle {
-        constructor(number, capacity, route, type = "Train", compartments = 0) {
-            super(number, capacity, route, type); 
-            this.compartments = compartments;
+        constructor(number, capacity, route, numCarriages) {
+            super(number, capacity, route, `Train`); 
+            this.numCarriages = numCarriages;
         }
     }
 
     class Subway extends Vehicle {
-        constructor(number, capacity, route, type = "Subway", underground = true) {
-            super(number, capacity, route, type);
+        constructor(number, capacity, route, underground) {
+            super(number, capacity, route, `Subway`);
             this.underground = underground; 
         }
     }
 
-    class Tram extends Vehicle {  // Added the Tram class
-        constructor(number, capacity, route, type = "Tram", electric = true) {
-            super(number, capacity, route, type);
-            this.electric = electric;
-        }
-    }
+
+//Passenger class
 
     class Passenger {
         constructor(name, age, destination) {
@@ -87,60 +67,96 @@ class Vehicle {
     }
 
     //vehicles
-    const bus1 = new Bus("B123", 50, "Route 1", "Bus", ["Stop 1", "Stop 2"]); 
-    const train1 = new Train("T456", 200, "Route 2", "Train", 10);
-    const subway1 = new Subway("S789", 100, "Route 3"); 
-    const tram1 = new Tram("Tram1", 80, "Route 4");
+    const cityBus = new Bus(301, 40, `Central Station to Riverside`, `City Bus`); 
+    const expressTrain = new Train(401, 300, `North Line to downtown Bellingham`, 10);
+    const metroSubway = new Subway(501, 100, `Green Line to uptown New York`, true); 
 
-    const vehicles = [bus1, train1, subway1, tram1];
+    const vehicles = [cityBus, expressTrain, metroSubway];
 
-    document.getElementById('addPassengerBtn').addEventListener('click', () => {
-        const name = document.getElementById('passengerName').value; 
-        const age = parseInt(document.getElementById('passengerAge').value); 
-        const destination = document.getElementById('passengerDestination').value; 
-        const vehicleNumber = document.getElementById('vehicleNumber').value;
-        const vehicleType = document.getElementById('vehicleType').value;
+    //Array to hold all Passengers
+    const passengers = [];
+    //DOM Elements
+    const passengerNameInput = document.getElementById('passengerName'); 
+    const passengerAgeInput = document.getElementById('passengerAge'); 
+    const passengerDestinationInput = document.getElementById('passengerDestination');
+    const addPassengerBtn = document.getElementById('addPassengerBtn'); 
+    const listVehiclesBtn = document.getElementById('listVehiclesBtn');
+    const vehicleList = document.getElementById('vehicleList');
+   
 
-        const passenger = new Passenger(name, age, destination); 
-        const vehicle = vehicles.find(v => v.number === vehicleNumber && v.type === vehicleType);
+//Add Passenger to vehicle function
+function addPassengerToVehicle(vehicleIndex) {
+    const name = passengerNameInput.value; 
+    const age = parseInt(passengerAgeInput.value); 
+    const destination = passengerDestinationInput.value; 
 
-        if (vehicle) {
-            document.getElementById('output').innerHTML = vehicle.addPassenger(passenger); 
-            } else {
-                document.getElementById('output').innerHTML = `Vehicle ${vehicleNumber} of type ${vehicleType} not found.`;
-            }
+    if (!name || isNaN(age) || !destination) {
+        alert(`Please enter valid passenger information.`);
+        return;
+    }
+
+    const newPassenger = new Passenger (name, age, destination);
+    
+
+    //Check if passenger already exists on vehicle
+    const isPassengerOnAnyVehicle = vehicles[vehicleIndex].passengers.some(
+        passenger => 
+            passenger.name === newPassenger.name && 
+            passenger.age === newPassenger.age &&
+            passenger.destination === newPassenger.destination
+        );
+    
+    if (isPassengerOnAnyVehicle) {
+        alert(`${newPassenger.name} is already on this vehicle.`);
+       return;
+    }
+    //add passenger to vehicle
+    vehicles[vehicleIndex].addPassenger(newPassenger);
+    passengers.push(newPassenger);
+    //clear input fields
+    passengerNameInput.value = '';
+    passengerAgeInput.value = '';
+    passengerDestinationInput.value = '';
+
+    listVehicles(); //Update vehicle list 
+}
+
+//remove passenger from vehicle
+function removePassengerFromVehicle(vehicleIndex){
+    const removedPassenger = vehicles[vehicleIndex].removePassenger();
+
+    if (removedPassenger) {
+        passengers.splice(passengers.indexOf(removedPassenger), 1);
+        alert (`${removedPassenger.name} removed from Vehicle ${vehicles[vehicleIndex].number}`);
+    } else {
+        alert ('No passengers to move from this vehicle.');
+    }
+        listVehicles();
+}
+
+
+//list vehicles
+function listVehicles() {
+    vehicleList.innerHTML = '';  //clear previous list
+    
+    vehicles.forEach((vehicle, index) => {
+        const li = document.createElement('li');
+        li.innerHTML = `
+        Vehicle ${vehicle.number} (${vehicle.type}) - ${vehicle.route}, Capacity: ${vehicle.capacity}, Passengers: ${vehicle.passengers.length}<br>
+        <button onclick="addPassengerToVehicle(${index})">Add Passenger</button>
+        <button onclick="removePassengerFromVehicle(${index})">Remove Passenger</button>
+        `;
+     
+        vehicleList.appendChild(li);
     });
+}
+//Set up listeners after DOM content is loaded
+document.addEventListener('DOMContentLoaded', () => {
+    listVehicles();
+    document.getElementById('listVehiclesBtn').addEventListener('click', listVehicles);
+       
+});
+//listVehiclesBtn.addEventListener('click', listVehicles);
 
-    document.getElementById('removePassengerBtn').addEventListener('click', () => {
-        const name = document.getElementById('passengerName').value; 
-        const vehicleNumber = document.getElementById('vehicleNumber').value;
-        const vehicleType = document.getElementById('vehicleType').value;
 
-        const vehicle = vehicles.find(v => v.number === vehicleNumber && v.type === vehicleType);
-        const passenger = vehicle ? vehicle.passengers.find(p => p.name === name) : null;
 
-        if (vehicle && passenger) {
-            document.getElementById('output').innerHTML = vehicle.removePassenger(passenger);
-        } else {
-            document.getElementById('output').innerHTML = `Passenger or vehicle not found.`;
-        }
-    });
-    
-    document.getElementById('listPassengersBtn').addEventListener('click', () => {
-        const vehicleNumber = document.getElementById('vehicleNumber').value;
-        const vehicleType = document.getElementById('vehicleType').value;
-    
-        const vehicle = vehicles.find(v => v.number === vehicleNumber && v.type === vehicleType);
-    
-        if (vehicle) {
-            document.getElementById('output').innerHTML = vehicle.listPassengers();
-        } else {
-            document.getElementById('output').innerHTML = `Vehicle ${vehicleNumber} of type ${vehicleType} not found.`;
-        }
-    });
-    
-    document.getElementById('listVehiclesBtn').addEventListener('click', () => {
-        document.getElementById('output').innerHTML = Vehicle.listVehicles(vehicles);
-    });
-
-    

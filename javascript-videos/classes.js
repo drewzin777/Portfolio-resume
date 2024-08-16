@@ -11,8 +11,14 @@ let rockband = class {
     }
 }
 
-let metalilica = new rockband("Metallica", ["James Hatfield", "Lars Ulrich", "Kirk Hammett",
+let metallica = new rockband("Metallica", ["James Hatfield", "Lars Ulrich", "Kirk Hammett",
      "Robert Trujillo"], "Heavy Meatal");
 
-     metalilica.display();
+     metallica.display();
+
+let ledZeppelin = new rockband("LedZeppelin", ["Robert Plant", "Jimmy Page", "John Paul Jones", "John Bonham",
+    "Hard Rock"]);
+
+
+ledZeppelin.display();
 
