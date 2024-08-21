@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Organizer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0; 
+            padding: 20px; 
+            max-width: 100%;
+        }
+
+       h1, h2 {
+        color: rgb(19, 17, 17); 
+        text-align: center;
+       }
+
+       form {
+        background-color: lightslategray;
+        padding: 20px; 
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        max-width: 400px; 
+        margin: 20px auto; 
+       }
+
+       label {
+            display: block; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            color: rgb(54, 46, 46); 
+        }
+
+        input[type="text"], input[type="date"], input[type="time"], textarea {
+            width: 96%;
+            padding: 15px; 
+            margin-bottom: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            margin-right: 10px; 
+        }
+
+        button[type="submit"] {
+            background-color: #f44336;
+            color: white; 
+        }
+
+        #eventList {
+            max-width: 100px;
+            margin: 20px auto; 
+            padding: 0; 
+            list-style: none; 
+        }
+
+        .event-item {
+            background-color: whitesmoke;
+            padding: 15px; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px; 
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .event-item strong {
+            display: block; 
+            margin-bottom: 5px; 
+            font-size: 1.1em;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white; 
+            border: none; 
+            padding: 5px 10px; 
+            border-radius: pointer; 
+            float: right; 
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        #map {
+            height: 400px; 
+            margin: 20px auto; 
+            max-width: 100%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        @media (min-width: 768px) {
+            form, #eventList, #map {
+                max-width: 600px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            form, #eventList, #map {
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Personal Organizer</h1>
+
+    <form id="eventForm">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" required><br>
+
+        <label for="eventDate">Date:</label> 
+        <input type="text" id="eventDate" required><br>
+
+        <label for="eventTime">Time:</label>
+        <input type="text" id="eventTime" required><br>
+
+        <label for="eventLocation">Location:</label>
+        <input type="text" id="eventLocation" required><br>
+
+        <label for="eventNotes">Notes:</label>
+        <textarea id="eventNotes"></textarea><br>
+
+        <button type="submit">Add Event</button>
+        
+        </form>
+        
+        <div id="map" style="height: 400px; margin: 20px auto; max-width: 400px;"></div>
+
+
+        <h2>Event List</h2>
+        <ul id="eventList"></ul>
+    
+    <script src="organizer.js"></script>
+</body>
+</html>
