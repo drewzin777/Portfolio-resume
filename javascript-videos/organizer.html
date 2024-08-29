@@ -29,7 +29,7 @@
         padding: 20px; 
         border-radius: 8px;
         box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
-        max-width: 400px; 
+        max-width: 100%; 
         margin: 20px auto; 
        }
 
@@ -41,11 +41,12 @@
         }
 
         input[type="text"], input[type="date"], input[type="time"], textarea {
-            width: 96%;
-            padding: 15px; 
+            width: 100%;
+            padding: 10px; 
             margin-bottom: 10px; 
             border: 1px solid #ccc; 
             border-radius: 4px;
+            box-sizing: border-box;
         }
 
         button {
@@ -54,6 +55,7 @@
             border-radius: 4px; 
             cursor: pointer; 
             margin-right: 10px; 
+            box-sizing: border-box;
         }
 
         button[type="submit"] {
@@ -66,6 +68,7 @@
             margin: 20px auto; 
             padding: 0; 
             list-style: none; 
+            box-sizing: border-box;
         }
 
         .event-item:hover{
@@ -79,6 +82,7 @@
             border-radius: 4px;
             margin-bottom: 10px; 
             box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
 
         .event-item strong {
@@ -106,7 +110,7 @@
             padding: 45px; 
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            max-width: 400px;
+            max-width: 200px;
             margin: 20px auto; 
         }
 
@@ -116,16 +120,17 @@
             max-width: 96%;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
         }
 
         @media (min-width: 768px) {
-            form, #eventList, #map {
+            form, #searchForm, #eventList, #map {
                 max-width: 600px;
             }
         }
 
         @media (min-width: 1024px) {
-            form, #eventList, #map {
+            form, #searchForm, #eventList, #map {
                 max-width: 800px;
             }
         }
@@ -139,10 +144,10 @@
         <input type="text" id="eventName" required><br>
 
         <label for="eventDate">Date:</label> 
-        <input type="text" id="eventDate" required><br>
+        <input type="date" id="eventDate" required><br>
 
         <label for="eventTime">Time:</label>
-        <input type="text" id="eventTime" required><br>
+        <input type="time" id="eventTime" required><br>
 
         <label for="eventLocation">Location:</label>
         <input type="text" id="eventLocation" required><br>
@@ -153,8 +158,8 @@
         <button type="submit">Add Event</button>
         </form>
 
-    <form id="searchForm">
         <h2>Search Events</h2>
+    <form id="searchForm">
         <label for="searchName">Event Name:</label> 
         <input type="text" id="searchName"><br>
 
