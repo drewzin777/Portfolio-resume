@@ -74,11 +74,9 @@
         }
 
         #eventList {
-            max-width: 100px;
             margin: 20px auto; 
             padding: 0; 
             list-style: none; 
-            box-sizing: border-box;
         }
 
         .event-item:hover{
@@ -164,14 +162,12 @@
         }
         
         #map {
-            height: 400px; 
-            margin: 20px auto; 
+            height: 400px;  
             max-width: 96%;
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            box-sizing: border-box;
         }
-
+        /* responsive styles*/
         @media (max-width: 480px) {
             body {
                 overflow-x: hidden;
@@ -206,7 +202,6 @@
             }
 
             input [type="text"], input [type="date"], input [type="time"], input [type="text"], textarea, button, #searchForm input[type="text"], #searchForm input[type="date"] {
-                width: 100%;
                 padding: 8px; 
                 font-size: 14px; 
             }
