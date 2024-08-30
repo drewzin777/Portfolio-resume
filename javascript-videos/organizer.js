@@ -4,6 +4,7 @@ const map = L.map('map').setView([51.505, -0.09], 13);
 L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
 }).addTo(map); 
+
 //geocode function
 function geocodeLocation(location, callback) {
     const url = `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(location)}`;
@@ -32,32 +33,53 @@ const eventTime = document.getElementById('eventTime').value;
 const eventLocation = document.getElementById('eventLocation').value;
 const eventNotes = document.getElementById('eventNotes').value;
 
-//create a new event object 
-const event = {
-    name: eventName, 
-    date: eventDate, 
-    time: eventTime, 
-    location: eventLocation, 
-    notes: eventNotes
-}; 
+//if editing an existing event, update the event
+if (eventToEdit) {
+    eventToEdit.name = eventName;
+    eventToEdit.date = eventDate;
+    eventToEdit.time = eventTime; 
+    eventToEdit.location = eventLocation; 
+    eventToEdit.notes = eventNotes;
 
-// Geocode the location and add a marker
-geocodeLocation(eventLocation, (lat, lon) => {
-    const marker = L.marker([lat, lon]).addTo(map);
-    marker.bindPopup(`<b>${eventName}</b><br>${eventLocation}`).openPopup();
+    updateEvent(eventToEdit);
+    eventToEdit = null; //clear the editing flag
+} else {
+    const event = { name: eventName, date: eventDate, time:  eventTime, location: eventLocation, notes: eventNotes };
 
-    // Center the map on the marker
-    map.setView([lat, lon], 13);
+    //Geocode the location and add a marker
+    geocodeLocation(eventLocation, (lat, lon) => {
+        const marker = L.marker([lat, lon]).addTo(map);
+        marker.bindPopup(`<b>${eventName}</b><br>${eventLocation}`).openPopup();
+
+        //center map 
+        map.setView([lat, lon], 13);
+    });
+
+    saveEvent(event);
+    createEventItem(event);
+
+    //clear form fields after adding event
+    document.getElementById('eventForm').reset();
+    }
 });
 
-//save event to local storage
-saveEvent(event); 
-createEventItem(event);
+function updateEvent(updatedEvent) {
+    let events = JSON.parse(localStorage.getItem('events')) || [];
 
-//clear form fields after adding event
-document.getElementById('eventForm').reset();
+    events = events.map(event => {
+        if (event.name === updatedEvent.name && event.date === updatedEvent.date) {
+            return updatedEvent;
+        }
+        return event;
+    });
 
-});
+    localStorage.setItem('events', JSON.stringify(events));
+    
+    // Reload the event list to show the updated event
+    document.getElementById('eventList').innerHTML = '';
+    loadEvents();
+}
+
 //search form submission
 document.getElementById('searchForm').addEventListener('submit', function(e) {
     e.preventDefault();
@@ -65,8 +87,6 @@ document.getElementById('searchForm').addEventListener('submit', function(e) {
     const searchName = document.getElementById('searchName').value.toLowerCase();
     const searchDate = document.getElementById('searchDate').value;
     const searchLocation = document.getElementById('searchLocation').value.toLowerCase();
-
-    //console.log('Search Parameters:', { searchName, searchDate, searchLocation});
 
     //load events from storage
     let events = JSON.parse(localStorage.getItem('events')) || [];
@@ -94,8 +114,14 @@ function createEventItem(event) {
     <strong>${event.name}</strong> - ${event.date} at ${event.time} <br>
     Location: ${event.location} <br> 
     Notes: ${event.notes} <br> 
-    <button class ="delete-btn">Delete</button>
+    <button class="edit-btn">Edit</button>
+    <button class="delete-btn">Delete</button>
 `;
+
+//edit button function
+eventItem.querySelector('.edit-btn').addEventListener('click', function() {
+    loadEventToForm(event);
+});
 
 eventItem.querySelector('.delete-btn').addEventListener('click', function() {
     eventItem.remove();
@@ -117,6 +143,16 @@ function saveEvent(event) {
 function loadEvents() {
     let events = JSON.parse(localStorage.getItem('events')) || []; 
     events.forEach(createEventItem);
+}
+
+let eventToEdit = null; 
+function loadEventToForm(event) {
+    document.getElementById('eventName').value = event.name;
+    document.getElementById('eventDate').value = event.date; 
+    document.getElementById('eventTime').value = event.time; 
+    document.getElementById('eventLocation').value = event.location; 
+    document.getElementById('eventNotes').value = event.notes;
+    eventToEdit = event;
 }
 
 //map popup and function 
