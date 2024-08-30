@@ -11,7 +11,17 @@
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
     <style>
+        /* prevent horixontal scrolling */ 
+        html {
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
         body {
+            overflow-y: auto;
             font-family: Arial, Helvetica, sans-serif;
             background-color: #f4f4f4;
             margin: 0; 
@@ -160,6 +170,62 @@
             border-radius: 8px;
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             box-sizing: border-box;
+        }
+
+        @media (max-width: 480px) {
+            body {
+                overflow-x: hidden;
+                padding: 10px; 
+            }
+
+            #searchForm {
+                padding: 15px; 
+                margin: 10px auto;
+                width: 90%;
+            }
+
+            #searchForm label {
+                font-size: 0.9em;
+            }
+
+            #searchForm input[type="text"], 
+            #searchForm input[type="date"] {
+                padding: 8px; 
+                font-size: 0.9em;
+            }
+
+            #searchForm button {
+                padding: 8px 12px; 
+                font-size: 0.9em; 
+            }
+
+            form, #searchForm, #eventList, #map {
+                max-width: 100%; 
+                padding: 10px;
+                margin: 0 auto;
+            }
+
+            input [type="text"], input [type="date"], input [type="time"], input [type="text"], textarea, button, #searchForm input[type="text"], #searchForm input[type="date"] {
+                width: 100%;
+                padding: 8px; 
+                font-size: 14px; 
+            }
+
+            button[type="submit"], .delete-btn, .edit-btn {
+                padding: 8px 12px; 
+                font-size: 14px;
+            }
+
+            .event-item { 
+                padding: 10px; 
+                font-size: 14px;
+            }
+
+            #map {
+                height: 300px; 
+                margin: 10px auto; 
+                width: 100%;
+            }
         }
 
         @media (min-width: 768px) {
