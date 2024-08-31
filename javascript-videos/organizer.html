@@ -10,6 +10,10 @@
      <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
      integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
      crossorigin=""></script>
+
+     <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <style>
         /* prevent horixontal scrolling */ 
         html {
@@ -281,5 +285,17 @@
         <ul id="eventList"></ul>
     
     <script src="organizer.js"></script>
+     <!-- Flatpickr JS -->
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() { 
+            flatpickr("#eventTime", {
+                enableTime: true,
+                noCalendar: true, 
+                dateFormat: "h:i K",    //12-hour format 
+                time_24hr: false       //disable 24-hour format
+        });
+    });
+    </script>
 </body>
 </html>

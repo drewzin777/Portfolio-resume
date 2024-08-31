@@ -65,7 +65,7 @@ if (eventToEdit) {
 
 function updateEvent(updatedEvent) {
     let events = JSON.parse(localStorage.getItem('events')) || [];
-
+    //update the events in local storage
     events = events.map(event => {
         if (event.name === updatedEvent.name && event.date === updatedEvent.date) {
             return updatedEvent;
@@ -74,10 +74,32 @@ function updateEvent(updatedEvent) {
     });
 
     localStorage.setItem('events', JSON.stringify(events));
-    
-    // Reload the event list to show the updated event
-    document.getElementById('eventList').innerHTML = '';
-    loadEvents();
+
+    //find corresponding event and update it
+    const eventItems = document.querySelectorAll('.event-item');
+    eventItems.forEach(item => {
+        if (item.querySelector('strong').innerText === updatedEvent.name &&
+        item.innerHTML.includes(updatedEvent.date)) {
+            //update event item
+            item.innerHTML = `
+                <strong>${updatedEvent.name}</strong> ${updatedEvent.date} at ${updatedEvent.time} <br>
+                Location: ${updatedEvent.location} <br>
+                Notes: ${updatedEvent.notes} <br>
+                <button class="edit-btn">Edit</button>
+                <button class="delete-btn">Delete</button
+                `;
+
+                //Re attach event listeners for new buttons
+                item.querySelector('.edit-btn').addEventListener('click', function() {
+                    loadEventToForm(updatedEvent);
+                });
+
+                item.querySelector('.delete-btn').addEventListener('click', function() {
+                    item.remove();
+                    deleteEvent(updatedEvent);
+                });  
+            }
+        });
 }
 
 //search form submission
@@ -111,7 +133,7 @@ function createEventItem(event) {
     const eventItem = document.createElement('li');
     eventItem.classList.add('event-item'); 
     eventItem.innerHTML = `
-    <strong>${event.name}</strong> - ${event.date} at ${event.time} <br>
+    <strong>${event.name}</strong> ${event.date} at ${event.time} <br>
     Location: ${event.location} <br> 
     Notes: ${event.notes} <br> 
     <button class="edit-btn">Edit</button>
