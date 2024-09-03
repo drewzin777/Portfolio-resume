@@ -75,33 +75,20 @@ function updateEvent(updatedEvent) {
 
     localStorage.setItem('events', JSON.stringify(events));
 
-    //find corresponding event and update it
+    //find and remove the old event 
     const eventItems = document.querySelectorAll('.event-item');
     eventItems.forEach(item => {
         if (item.querySelector('strong').innerText === updatedEvent.name &&
         item.innerHTML.includes(updatedEvent.date)) {
-            //update event item
-            item.innerHTML = `
-                <strong>${updatedEvent.name}</strong> ${updatedEvent.date} at ${updatedEvent.time} <br>
-                Location: ${updatedEvent.location} <br>
-                Notes: ${updatedEvent.notes} <br>
-                <button class="edit-btn">Edit</button>
-                <button class="delete-btn">Delete</button
-                `;
+            item.remove();   //remove old event
 
-                //Re attach event listeners for new buttons
-                item.querySelector('.edit-btn').addEventListener('click', function() {
-                    loadEventToForm(updatedEvent);
-                });
+        }
+    });
 
-                item.querySelector('.delete-btn').addEventListener('click', function() {
-                    item.remove();
-                    deleteEvent(updatedEvent);
-                });  
-            }
-        });
+    //add the updated event to list
+    createEventItem(updatedEvent);
 }
-
+           
 //search form submission
 document.getElementById('searchForm').addEventListener('submit', function(e) {
     e.preventDefault();
