@@ -22,6 +22,55 @@ function geocodeLocation(location, callback) {
         .catch(err => console.error(err));
 }
 
+let isEditing = false; 
+let currentEvent = null; 
+
+//function to start editing and event
+function editEvent(eventId) {
+    isEditing = true; 
+    currentEventId = eventId; 
+    
+//populate form with event data
+    const event = getEventById(eventId); 
+    document.getElementById('eventName').value = event.name;
+    document.getElementById('eventDate').value = event.date; 
+}
+
+//function to save event 
+function saveEvent() {
+    if (isEditing) {
+        updateEvent(currentEventId, {
+            name: document.getElementById('eventName').value,  
+            date: document.getElementById('eventDate').value,
+        });
+
+        isEditing = false; //flag reset 
+        currentEventId = null; 
+    } else {
+        addNewEvent ({
+            name: document.getElementById('eventName').value,  
+            date: document.getElementById('eventDate').value,  
+        });
+    }
+
+    document.getElementById('eventForm').reset();  
+}
+
+//function to get event date by ID
+function getElementById(eventId) {
+    //implement logic to get event by ID from your data storage
+}
+
+//fuction to update event
+function updateEvent(eventId, updatedEvent) {
+    //implement locit to update event in storage
+}
+
+//function to add a new event
+function addNewEvent(newEventData) {
+    //implement logic to add a new event to storage
+}
+ 
 //event form submission
 document.getElementById('eventForm').addEventListener('submit', function(e) {
     e.preventDefault();
