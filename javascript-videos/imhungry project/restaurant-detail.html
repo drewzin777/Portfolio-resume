@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Restaurant Details</title>
+    <!-- link to external css -->
+    <link rel="stylesheet" href="styles.css">
+    <!-- google maps API script with your API key -->
+    <script src ="https://maps.googleapis.com/maps/api/js?key=AIzaSyAlj4pIqSpB36k1mVi7sATJZwbQPHVj0os&libraries=places&callback=initMap" async defer></script>
+
+</head>
+<body>
+    <h1 id="restaurant-name">Loading...</h1>
+    <p id="restaurant-address"></p> 
+    <p id="restaurant-rating"></p> 
+
+    <div id="map"></div> <!-- for showing the restaurant's location -->
+
+    <!-- external JS file --> 
+     <script src="restaurant-detail.js"></script>
+
+</body>
+</html>
