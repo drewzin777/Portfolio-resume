@@ -17,7 +17,6 @@ function initMap() {
         initializeMainPage();
     }
 }
-console.log(initMap);
    
     //main page (index.html): search for nearby restaurants
     function initializeMainPage() {
@@ -75,7 +74,7 @@ function initializeDetailsPage(place_Id) {
 
     const request = {
         placeId: place_Id,
-        fields: ['name', 'formatted_address', 'geometry', 'rating'],
+        fields: ['name', 'formatted_address', 'geometry', 'rating', 'formatted_phone_number', 'photos'],
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -118,13 +117,28 @@ function handlePlaceDetails(place, status) {
         document.getElementById('restaurant-address').textContent = place.formatted_address;
         document.getElementById('restaurant-rating').textContent = `Rating: ${place.rating || 'N/A'}`;
 
-        //set map to reataurant's location
+        //display phone number if available
+        if (place.formatted_phone_number) {
+            document.getElementById('restaurant-phone').textContent = `Phone: ${place.formatted_phone_number}`;
+        }   
+
+        //display photos(2) if available
+        if (place.photos && place.photos.length > 0) {
+            const photoUrl1 = place.photos[0].getUrl({ maxWidth: 400, maxHeight: 400}); 
+            document.getElementById('restaurant-photo1').src = photoUrl1;
+        }
+        if (place.photos && place.photos.length > 1) {
+            const photoUrl2 = place.photos[1].getUrl({ maxWidth: 400, maxHeight: 400}); 
+            document.getElementById('restaurant-photo2').src = photoUrl2;
+        }
+
+        //center map on the restaurants location
         map.setCenter(place.geometry.location);
 
         //add a marker for the restaurant
-        const markerElement = new google.maps.marker.AdvancedMarkerElement({
-            map: map,
+        new google.maps.Marker({
             position: place.geometry.location,
+            map: map,
             title: place.name,
         });
     } else {
