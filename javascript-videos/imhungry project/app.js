@@ -1,130 +1,140 @@
-//initialize map
+ //initialize map
 let map; 
-let service; 
+let service;  
 let infowindow; 
 
-function initMap(lat, lng) {
-    const location = new google.maps.LatLng(lat, lng);
+function initMap() {
+    //get place_Id from the URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const place_Id = urlParams.get('place_id');
 
+    if (place_Id) {
+        console.log('initialzeDetailsPage');
+        //if a place_id exists were on details page 
+        initializeDetailsPage(place_Id);
+    } else {
+        //if no place_id were on the index(main)page
+        initializeMainPage();
+    }
+}
+console.log(initMap);
+   
+    //main page (index.html): search for nearby restaurants
+    function initializeMainPage() {
+        const defaultLocation = { lat: 40.730610, lng: -73.935242 }; //default location
+    
+    //initializze map
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: defaultLocation,
+        zoom: 15,
+    });
 
-map = new google.maps.Map(document.getElementById("map"), {
-    center: location,
-    zoom: 14, 
-});
+    //event listener for the "find restaurants" button
+    document.getElementById('findRestaurants').addEventListener('click', () => {
+        const locationInput = document.getElementById('location').value;
 
-const request = {
-    location: location, 
-    radius: '1500',
-    type: ['restaurant']
-};
+        if (locationInput) {
+            const geocoder = new google.maps.Geocoder();
+            geocoder.geocode({ address: locationInput }, (results, status) => {
+                if (status === google.maps.GeocoderStatus.OK) {
+                    const lat = results[0].geometry.location.lat();
+                    const lng = results[0].geometry.location.lng(); 
+                    const location = { lat: lat, lng: lng };
+                    searchNearbyRestaurants(location);
+                } else {
+                    alert('City not found: ' + status);
+                }
+                });
+            } else {
+            alert('Plese enter a city.');
+            }
+        });
+    }
 
-service = new google.maps.places.PlacesService(map);
-service.nearbySearch(request, handleResults);
+    //function to search nearby restaurants based on location
+    function searchNearbyRestaurants(location) {
+        map.setCenter(location);
+    
+        const request = {
+            location: location,
+            radius: '1500',
+            type: ['restaurant'],
+    };
+
+    service = new google.maps.places.PlacesService(map);
+    service.nearbySearch(request, handleResults);
 }
 
-//handle search results
-function handleResults(results, status) {
-    if (status == google.maps.places.PlacesServiceStatus.OK) {
-        document.getElementById('results').innerHTML = ''; //clear previous results
+//details page (restaurant-details.html): show details for a single restaurant 
+function initializeDetailsPage(place_Id) {
+    //initialize map with a default location
+    map = new google.maps.Map(document.getElementById('map'), {
+        center: { lat: 40.730610, lng: -73.935242 }, // Default location (NYC)
+        zoom: 15,
+    });
 
+    const request = {
+        placeId: place_Id,
+        fields: ['name', 'formatted_address', 'geometry', 'rating'],
+    };
+
+    service = new google.maps.places.PlacesService(map);
+    service.getDetails(request, handlePlaceDetails);
+}
+
+//handle search for multiple restaurants(for index.html)
+function handleResults(results, status) {
+    if (status === google.maps.places.PlacesServiceStatus.OK) {
+        document.getElementById('results').innerHTML = ''; //clear previous status
+        
         results.forEach((place) => {
             const li = document.createElement('li');
-            li.textContent = place.name; 
-            //link to restaurant-detail page
+            li.textContent = place.name;
+
             li.addEventListener('click', () => {
                 window.location.href = `restaurant-detail.html?place_id=${place.place_id}`;
-            }); 
-               
-            document.getElementById('results').appendChild(li); 
+            });
+
+            document.getElementById('results').appendChild(li);
 
             //add marker to map
-            const marker = new google.maps.Marker({
+            const markerElement = new google.maps.Marker({
                 position: place.geometry.location,
                 map: map,
                 title: place.name,
             });
         });
     } else {
-        console.error('PlacesService failed due to: ', status);
+        console.error('Failed to get seadrch results: ', status);
     }
 }
 
-//parse the place_id from the URL 
-const urlParams = URLSearchParams(window.location.search);
-const placeId = urlParams.get('place_id'); 
+//Handle single restaurant details for (restaurant-detail.html)
+function handlePlaceDetails(place, status) {
 
-if (placeId) {
-    //initialize the map and fetch restaurant details 
-    const service = new google.maps.places.PlacesService(document.createElement('div')); 
+    if (status == google.maps.places.PlacesServiceStatus.OK) {
+        //update details on page
+        document.getElementById('restaurant-name').textContent = place.name;
+        document.getElementById('restaurant-address').textContent = place.formatted_address;
+        document.getElementById('restaurant-rating').textContent = `Rating: ${place.rating || 'N/A'}`;
 
-    const request = { 
-        placeId: placeId
-    };
+        //set map to reataurant's location
+        map.setCenter(place.geometry.location);
 
-    //fetch details for restaurant
-    service.getDetails(request, (place, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            document.getElementById('restaurant-name').textContent = place.name;
-            document.getElementById('restaurant-address').textContent = place.formatted_address;
-            document.getElementById('restaurant-rating').textContent = `Rating: ${place.rating || 'N/A'}`;
-
-            const map = google.maps.Map(document.getElementById('map'), {
-                center: place.geometry.location,
-                zoom: 15
-            });
-
-            new google.maps.Marker({
-                position: place.geometry.location,
-                map: map,
-                title: place.name 
-            });
-            } else {
-                console.error('PlaceService failed to fetch details due to: ', status);
-            }
+        //add a marker for the restaurant
+        const markerElement = new google.maps.marker.AdvancedMarkerElement({
+            map: map,
+            position: place.geometry.location,
+            title: place.name,
         });
     } else {
-        alert('No place_id found in the URL.');
+        console.error('Failed to get place details ', status);
     }
-
-//show details of a restaurant
-function showDetails(placeId) {
-    const request = { placeId }; 
-    service.getDetails(request, (place, status) => {
-        if (status === google.maps.places.PlacesServiceStatus.OK) {
-            alert(`Name: ${place.name}\nRating: ${place.rating}\nAddress: ${place.formatted_address}`);
-        }
-    });
 }
 
-//event listener for button 
-document.getElementById('findRestaurants').addEventListener('click', () => {
-    const locationInput = document.getElementById('location').value; 
+//initialize map when page loads
+window.onload = initMap;
 
-    if (locationInput) {
-        const geocoder = new google.maps.Geocoder(); 
-        geocoder.geocode({ address: locationInput }, (results, status) => {
-            if (status === google.maps.GeocoderStatus.OK) {
-                const lat = results[0].geometry.location.lat();
-                const lng = results[0].geometry.location.lng();
-                initMap(lat, lng); 
-            } else {
-                alert("Could not find location: " + status);
-            }
-        });
-    } else {
-        //use current location if input is empty
-        if (navigator.geolocation) {
-            navigator.geolocation.getCurrentPosition((position) => {
-                initMap(position.coords.latitude, position.coords.longitude);
-            });
-        } else {
-            alert('Geolocation not supported by your browser.');
-        }
-    }   
-}); 
 
-var port = chrome.runtime.connect({name: "communicationChannel"});
-port.onDisconnect.addListener(function() {
-    console.log("Port was disconnected.");
-    // optionally, you can try to reconnect the port here
-});
+
+
