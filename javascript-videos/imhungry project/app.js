@@ -74,7 +74,7 @@ function initializeDetailsPage(place_Id) {
 
     const request = {
         placeId: place_Id,
-        fields: ['name', 'formatted_address', 'geometry', 'rating', 'formatted_phone_number', 'photos'],
+        fields: ['name', 'formatted_address', 'geometry', 'rating', 'formatted_phone_number', 'photos', 'opening_hours', 'website'],
     };
 
     service = new google.maps.places.PlacesService(map);
@@ -122,14 +122,47 @@ function handlePlaceDetails(place, status) {
             document.getElementById('restaurant-phone').textContent = `Phone: ${place.formatted_phone_number}`;
         }   
 
-        //display photos(2) if available
-        if (place.photos && place.photos.length > 0) {
-            const photoUrl1 = place.photos[0].getUrl({ maxWidth: 400, maxHeight: 400}); 
-            document.getElementById('restaurant-photo1').src = photoUrl1;
+        //display website if available
+        if (place.website) {
+            const websiteElement = document.getElementById('restaurant-url').firstElementChild;
+            websiteElement.href = place.website; 
+            websiteElement.textContent = 'Visit Website';
+        } else {
+            document.getElementById('restaurant-url').textContent = 'Website not available';
         }
-        if (place.photos && place.photos.length > 1) {
-            const photoUrl2 = place.photos[1].getUrl({ maxWidth: 400, maxHeight: 400}); 
+   
+        console.log(place.photgos);
+
+        //display photos(2) if available  
+        if (place.photos && place.photos.length > 0) {
+            //display first photo
+            const photoUrl1 = place.photos[0].getUrl({ maxWidth: 400, maxHeight: 400 }); 
+            document.getElementById('restaurant-photo1').src = photoUrl1;
+
+            //display second photo
+            if (place.photos.length > 1) {
+            const photoUrl2 = place.photos[1].getUrl({ maxWidth: 400, maxHeight: 400 }); 
             document.getElementById('restaurant-photo2').src = photoUrl2;
+        } else {
+            document.getElementById('restaurant-photo2').style.display = 'none';
+        }
+    } else {
+            //hide both images if photos not available
+            document.getElementById('restaurant-photo1').style.display = 'none'; 
+            document.getElementById('restaurant-photo2').style.display = 'none';
+    }
+
+        //display hours of operation
+        if (place.opening_hours) {
+            const hoursElement = document.getElementById('restaurant-hours');
+            hoursElement.innerHTML = ''; //clear previous hours
+            place.opening_hours.weekday_text.forEach(day => {
+                const dayElement = document.createElement('p');
+                dayElement.textContent = day;
+                hoursElement.appendChild(dayElement);
+           });
+        } else {
+            document.getElementById('restaurant-hours').textContent = 'Hours not available';
         }
 
         //center map on the restaurants location
@@ -145,6 +178,7 @@ function handlePlaceDetails(place, status) {
         console.error('Failed to get place details ', status);
     }
 }
+
 
 //initialize map when page loads
 window.onload = initMap;
