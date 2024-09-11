@@ -28,6 +28,11 @@ function initMap() {
         zoom: 15,
     });
 
+    //event listener for the "Use My Location" button
+    document.getElementById('useLocation').addEventListener('click', () => {
+        getUserLocation();
+    })
+     
     //event listener for the "find restaurants" button
     document.getElementById('findRestaurants').addEventListener('click', () => {
         const locationInput = document.getElementById('location').value;
@@ -35,19 +40,64 @@ function initMap() {
         if (locationInput) {
             const geocoder = new google.maps.Geocoder();
             geocoder.geocode({ address: locationInput }, (results, status) => {
-                if (status === google.maps.GeocoderStatus.OK) {
+                if (status === google.maps.GeocoderStatus.OK && results.length > 0) {
                     const lat = results[0].geometry.location.lat();
                     const lng = results[0].geometry.location.lng(); 
                     const location = { lat: lat, lng: lng };
                     searchNearbyRestaurants(location);
+                } else if (status === google.maps.GeocoderStatus.ZERO_RESULTS) {
+                    alert('No results found for the specified location. Please check the input and try again.');
                 } else {
-                    alert('City not found: ' + status);
+                    alert('Geocoding failed: ' + status);
                 }
                 });
             } else {
             alert('Plese enter a city.');
             }
         });
+    }
+
+    //get user's location using the browser's API
+    function getUserLocation() {
+    try{
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(successCallback, errorCallback);
+        } else {
+            alert('Geolocation is not supported by this browser.'); 
+        }
+    } catch (error) {
+        console.error('Error occured while getting user location:', error);
+        }
+    }
+
+    //success callback for geolocation
+    function successCallback(position) {
+        const lat = position.coords.latitude; 
+        const lng = position.coords.longitude;
+        console.log('User location: ', lat, lng); 
+        const location = { lat: lat, lng: lng };
+
+        //center the map on user's location
+        map.setCenter(location); 
+        searchNearbyRestaurants(location); 
+    }
+    
+    //error callback for geolocation
+    function errorCallback(error) {
+        switch (error.code) {
+            case error.PERMISSION_DENIED:
+                alert('User denied the request for Geolocation. Please enable location and try again.'); 
+                break; 
+            case error.POSITION_UNAVAILABLE:
+                alert('Location information is unavailable');
+                break;
+            case error.TIMEOUT: 
+                alert('The request is to get user location timed out');
+                break; 
+            case error.UNKNOWN_ERROR:
+                alert('An unknown error occured.');
+                break;
+        }
     }
 
     //function to search nearby restaurants based on location
@@ -103,14 +153,16 @@ function handleResults(results, status) {
                 title: place.name,
             });
         });
+    } else if (status === google.maps.places.PlacesServiceStatus.ZERO_RESULTS) {
+        alert ('No nearby restaurants found. Try searching a different location');
     } else {
-        console.error('Failed to get seadrch results: ', status);
+        alert('Error fetching nearby restaurants. Please check your network connection and try again.');
     }
 }
 
 //Handle single restaurant details for (restaurant-detail.html)
 function handlePlaceDetails(place, status) {
-
+    
     if (status == google.maps.places.PlacesServiceStatus.OK) {
         //update details on page
         document.getElementById('restaurant-name').textContent = place.name;
@@ -131,7 +183,7 @@ function handlePlaceDetails(place, status) {
             document.getElementById('restaurant-url').textContent = 'Website not available';
         }
    
-        console.log(place.photgos);
+        console.log(place.photos);
 
         //display photos(2) if available  
         if (place.photos && place.photos.length > 0) {
