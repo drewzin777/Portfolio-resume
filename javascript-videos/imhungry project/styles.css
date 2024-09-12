@@ -1,5 +1,6 @@
 body {
     font-family: 'Roboto', sans-serif;
+    background-color: var(--secondary-color);
     margin: 20px; 
 }
 
@@ -11,12 +12,12 @@ body {
 }
 
 .restaurant-card {
-    transition: transorm 0.3s ease, box-shadow o.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
     border-radius: 10px;
 }
 
 .restaurant-card:hover {
-    transform: transform(-5px); 
+    transform: translateY(-5px); 
     box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
 }
 /* styles for the search bar */
@@ -51,7 +52,7 @@ body {
 #logo i { 
     margin-right: 8px; 
 }
-
+/* restaurant hours styling */
 #restaurant-hours {
     font-weight: normal;
     font-size: 0.9em;
@@ -60,21 +61,45 @@ body {
 }
 
 /* styles for photos */
-#restaurant-photo1, #restaurant-photo2 {
+.restaurant-photos {
+    display: flex; 
+    justify-content: space-between;
+    flex-wrap: wrap;
+    gap: 15px; 
+}
+
+.restaurant-photos img {
     width: 100%; 
-    max-width: 400px; 
-    height: auto;
-    object-fit: cover;
-    border-radius: 10px;
+    max-width: 400px;
+    height: auto; 
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-#restaurant-photo1, #restaurant-photo2 {
-    transition: transform o.3 ease, box-shadow 0.3s ease;
+/* style for buttons */
+.nav-button-container {
+    display: flex; 
+    justify-content: center;
+    margin-top: 30px; 
+    text-align: center;
 }
 
-#restaurant-photo1:hover, #restaurant-photo2:hover {
-    transform: scale(1.05); /* slight zoom on hover */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); 
+.nav-button {
+    background: linear-gradient(135deg, #ff6347, #ff4500);
+    padding: 10px 20px; 
+    font-size: 18px;
+    color: white; 
+    text-decoration: none;
+    border-radius: 5px;
+    display: inline-block;
+    transition: background 0.3s ease, box-shadow 0.3s ease;  
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); 
+}
+
+.nav-button:hover {
+    background-color: #cc523b; 
+    font-family: 'Roboto', sans-serif; 
+    font-weight: bold;
 }
 
 /* styles for map */
@@ -92,20 +117,22 @@ body {
     --secondary-color: #ffe4b5;
 }
 
-body {
-    background-color: var(--secondary-color);
+
+/* button styles */
+#search button {
+    margin: 0 10px;
 }
 
 .btn {
     background-color: var(--primary-color);
     color: #fff; 
-    border-radius: 5pc; 
+    border-radius: 5px; 
     padding: 10px 20px; 
     transition: background-color 0.3s ease; 
 }
 
 .btn:hover {
-    background-color: darken(var(--primary-color), 10%);
+    background-color: #cc523b;
 }
 
 /* styles for results list */ 
@@ -124,28 +151,6 @@ body {
     background-color: #f0f0f0;
 } 
 
-.nav-button-container {
-    text-align: center; 
-    margin-top: 30px auto; 
-}
-
-.nav-button {
-    background: linear-gradient(135deg, #ff6347, #ff4500);  
-    color: white; 
-    padding: 10px 20px; 
-    text-decoration: none; 
-    border-radius: 5px; 
-    font-size: 18px; 
-    display: inline-block; 
-    transition: background 0.3s ease, box-shadow 0,3s ease;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-}
-
-.nav-button:hover {
-    font-family: 'Roboto', sans-serif;
-    font-weight: bold;
-}
-
 @media (max-width: 600px) {
     .restaurant-list {
         grid-template-columns: 1fr;
@@ -153,6 +158,9 @@ body {
     }
     .search-bar {
         width: 100%;
+    }
+    .restaurant-photos {
+        max-width: 100%;
     }
 }
 

@@ -185,24 +185,33 @@ function handlePlaceDetails(place, status) {
    
         console.log(place.photos);
 
-        //display photos(2) if available  
+        //display photos(3) if available  
         if (place.photos && place.photos.length > 0) {
             //display first photo
             const photoUrl1 = place.photos[0].getUrl({ maxWidth: 400, maxHeight: 400 }); 
             document.getElementById('restaurant-photo1').src = photoUrl1;
 
             //display second photo
-            if (place.photos.length > 1) {
+        if (place.photos.length > 1) {
             const photoUrl2 = place.photos[1].getUrl({ maxWidth: 400, maxHeight: 400 }); 
             document.getElementById('restaurant-photo2').src = photoUrl2;
         } else {
             document.getElementById('restaurant-photo2').style.display = 'none';
         }
+
+        //third photo if available
+        if (place.photos.length > 2) {
+            const photoUrl3 = place.photos[2].getUrl({ maxWidth: 400, maxHeight: 400 });
+            document.getElementById('restaurant-photo3').src = photoUrl3;
+        } else {
+            document.getElementById('restaurant-photo3').style.display = 'none';
+        }
     } else {
-            //hide both images if photos not available
+            //hide images if photos not available
             document.getElementById('restaurant-photo1').style.display = 'none'; 
             document.getElementById('restaurant-photo2').style.display = 'none';
-    }
+            document.getElementById('restaurant-photo3').style.display = 'none';
+    }       
 
         //display hours of operation
         if (place.opening_hours) {
