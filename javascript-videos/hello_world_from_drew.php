@@ -11,7 +11,8 @@
         echo "<h1>Hello World!</h1>";
         echo "<h2>My name is Andrew";
         echo "<p>I am a bass playher.</p>";
-        echo "I have four great kids.";
+        echo "I have four great kids. Two boys and two girls.";
         ?>
+        <p>My favorite food is Italian, with Chinese as a close second.</p>
     </body>
 </html>
