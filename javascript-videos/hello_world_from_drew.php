@@ -8,11 +8,11 @@
     </head>
     <body>
         <?php
-        print "<h1>Hello World!</h1>";
-        print "<h2>My name is Andrew</h2>";
-        print "<p>I am a bass player.</p>";
-        print "I have four great kids. Two boys and two girls.";
-        print "<p>My favorite food is Italian, with Chinese as a close second.</p>";
+        echo "<h1>Hello World!</h1>";
+        echo "<h2>My name is Andrew</h2>";
+        echo "<p>I am a bass player.</p>";
+        echo "I have four great kids. Two boys and two girls.";
+        echo "<p>My favorite food is Italian, with Chinese as a close second.</p>";
         ?>
     </body>
 </html>
