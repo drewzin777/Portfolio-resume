@@ -6,10 +6,10 @@
     </head>
 <body>
     <?php
-   echo "<h1>Hello World!</h1>";
-   echo "<h2>My name is Andrew</h2>";
-   echo "<p>I am a bass player.</p>";
-   echo "<p>I have four kids. Two boys and two girls.</p>";
+        echo "<h1>Hello World!</h1>";
+        echo "<h2>My name is Andrew</h2>";
+        echo "<p>I am a bass player.</p>";
+        echo "<p>I have four kids. Two boys and two girls.</p>";
     ?>
 </body>
 </html>
