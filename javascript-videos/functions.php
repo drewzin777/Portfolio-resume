@@ -56,5 +56,36 @@
 
         displayTable($header, $data1, $data2);
     ?>
+    <br><br>
+    
+    <?php
+        //function to convert C to F
+        function celsiusToFahrenheit($celsius) {
+            return ($celsius * 9 / 5 + 32); 
+        }
+
+        //funtion to convert F to C
+        function fahrenheitToCelsius($fahrenheit) {
+            return ($fahrenheit - 32) * 5 / 9; 
+        }
+
+        //create table in HTML
+        echo "<table border='1', cellpadding='10', cellspacing='0', style='width: 50%; margin: 20px auto; text-align: center;'>";
+        echo "<tr><th>Fahrenheit</th><th>Celsius</th><th>Celsius</th><th>Fahrenheit</th></tr>";
+
+        for ($f = -40; $f <= 120; $f += 10) {
+            $celsius = fahrenheitToCelsius($f); 
+            $c1 = $f - 5; 
+            $fahrenheit = celsiusToFahrenheit($c1); 
+            echo "<tr>"; 
+            echo "<td>" . $f . "</td>"; 
+            echo "<td>" . round($celsius, 2) . "</td>"; 
+            echo "<td>" . $c1 . "</td>"; 
+            echo "<td>" . round($fahrenheit, 2) . "</td>"; 
+            echo "</tr>"; 
+        }
+
+        echo "</table>";
+    ?>
 </body>
 </html>
