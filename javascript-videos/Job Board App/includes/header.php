@@ -148,6 +148,9 @@
 <body>
 <header class="bg-dark text-white text-center py-3">
     <h1 class="text-white">Job Board</h1>
+    <nav>
+        <a href="auth/admin_dashboard.php" class="btn btn-light">Admin Dashboard</a>
+    </nav>
 </header>
 <div class="container">
     <!-- Main content area -->
