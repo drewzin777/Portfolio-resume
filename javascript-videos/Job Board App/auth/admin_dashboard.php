@@ -1,7 +1,8 @@
 <?php 
-session_start(); 
-var_dump($_SESSION); //Debugging ...
-exit();
+session_start();
+ 
+//var_dump($_SESSION); //Debugging ...
+//exit();
 
 //Check if user is logged and has admin privledges
 if (!isset($_SESSION['user_id']) || $_SESSION['role'] !== 'admin') {
@@ -55,8 +56,8 @@ $pdo = connectDb();
                     <td>" . htmlspecialchars($job['salary_range']) . "</td>
                     <td>" . htmlspecialchars($job['date_posted']) . "</td>
                     <td>
-                        <a href='edit_job.php?id=" . $job['id'] . "' class='btn btn-primary btn-sm'>Edit</a>
-                        <a href='delete_job.php?id=" . $job['id'] . "' class='btn btn-danger btn-sm' onclick='return confirm(\"Are you sure?\");'>Delete</a>
+                       <a href='edit_job.php?id=" . $job['id'] . "' class='btn btn-primary btn-sm'>Edit</a>
+                       <a href='delete_job.php?id=" . $job['id'] . "' class='btn btn-success btn-sm' onclick='return confirm(\"Are you sure?\");'>Delete</a>
                     </td>
                 </tr>";
             }

@@ -1,5 +1,6 @@
 <?php 
 session_start();
+
 require '../includes/functions.php'; 
 $pdo = connectDb(); 
 $error = ''; 
@@ -17,6 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ? OR email =?'); 
         $stmt->execute([$username_or_email, $username_or_email]);
         $user = $stmt->fetch(); 
+
+        //Debugg
+        //var_dump($user);
+        //exit();
 
         //Verify password
         if ($user && password_verify($password, $user['password_hash'])) {
