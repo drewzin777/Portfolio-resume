@@ -1,84 +1,112 @@
 <?php 
-    require 'includes/functions.php'; 
-    include 'includes/header.php'; 
+session_start();
 
-    //Set limit of jobs per page
-    $limit = 5;
+// Check if the user is logged in by verifying 'user_id' is set
+if (!isset($_SESSION['user_id'])) {
+  header("Location: auth/login.php");
+  exit();
+}
 
-    //Get current page or set default of 1
-    $page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
-    $offset = ($page -1) * $limit;
+// Set user role with default as 'user'
+$user_role = $_SESSION['role'] ?? 'user';
 
-    //Initializize jobs as an empty array
-    $jobs = []; 
+require 'includes/functions.php'; 
+include 'includes/header.php'; 
 
-    //Check if action is set (view, edit, delete)
-    $action = $_GET['action'] ?? 'view';
+// Set limit of jobs per page
+$limit = 5;
+$page = isset($_GET['page']) ? (int)$_GET['page'] : 1;
+$offset = ($page - 1) * $limit;
+$jobs = getJobs($limit, $offset); // Function to retrieve jobs based on limit and offset
 
-    //Handle add job form
-    if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'add') {
-        // Retrieve form data from POST request
-        $title = $_POST['job_title'];
-        $description = $_POST['job_description'];
-        $company = $_POST['company'];
-        $location = $_POST['location'];
-        $salary_range = $_POST['salary_range'];
+// Check if action is set (view, edit, delete)
+$action = $_GET['action'] ?? 'view';
+
+// Handle add job form
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && $action === 'add') {
+    $title = $_POST['job_title'];
+    $description = $_POST['job_description'];
+    $company = $_POST['company'];
+    $location = $_POST['location'];
+    $salary_range = $_POST['salary_range'];
     
-        // Call addJob function to insert data into the database
-        addJob($title, $description, $company, $location, $salary_range);
-        header("Location: index.php");  // Redirect to main page after adding job
-        exit();
-    }    
+    addJob($title, $description, $company, $location, $salary_range);
+    header("Location: index.php");
+    exit();
+}
 
-    //Display form or Delete job Based on Action
-    if ($action === 'add' || $action === 'edit') {
-        include 'includes/job_board_clean.php';  //Form is in <job_board php
-    } elseif ($action === 'delete') {
-        $jobId = $_GET['id']; 
-        deleteJob($jobId);        //Funtion in functions.php
-        header("Location: index.php");  //Redirect to main list
-        exit();   //Stop code after redirect
-    } else {
-        $jobs = getJobs($limit, $offset);          //Retrieve jobs for listing
-    }   
-    ?>
-    
-<!-- Display job listings only when not adding or editing -->
-<?php if($action === 'view'): ?>
-    <h2>Job Listings</h2>
-    <a href="index.php?action=add">Add Job</a>
-    <ul>
-        <?php foreach ($jobs as $job): ?>
-            <li>
-                <h3><?php echo htmlspecialchars($job['title']); ?></h3>
-                <p><?php echo htmlspecialchars($job['company']); ?></p>
-                <a href="job_details.php?id=<?php echo $job['id']; ?>">View Details</a>  <!-- New Link to View Details -->
-                <a href="index.php?action=edit&id=<?php echo $job['id']; ?>">Edit</a>
-                <a href="index.php?action=delete&id=<?php echo $job['id']; ?>">Delete</a>
-            </li>
-        <?php endforeach; ?>
-    </ul>
-<?php
-//Fetch total nuber of jobs to dermine number of pages
-$pdo = connectDb();     //pdo defined
-$total_jobs = $pdo->query("SELECT COUNT(*) FROM jobs")->fetchColumn();
-$total_pages = ceil($total_jobs / $limit);
+// Display form or Delete job Based on Action
+if ($action === 'add' || $action === 'edit') {
+    include 'includes/job_board_clean.php';
+} elseif ($action === 'delete') {
+    $jobId = $_GET['id']; 
+    deleteJob($jobId);
+    header("Location: index.php");
+    exit();
+} else {
+    $jobs = getJobs($limit, $offset);
+}   
 ?>
 
-<!-- Pagination Links --> 
-<div class="pagination">
-    <?php if ($page > 1): ?>
-        <a href="index.php?page=<?php echo $page - 1; ?>">Previous</a>
-    <?php endif; ?>
+<!-- Display job listings only when not adding or editing -->
+<?php if ($action === 'view'): ?>
+    <div class="container mt-4">
+        <h2>Job Listings</h2>
 
-    <?php if ($page < $total_pages): ?>
-        <a href="index.php?page=<?php echo $page + 1; ?>">Next</a>
-    <?php endif; ?>
-</div>
+        <!-- Only show Add Job and Admin Dashboard buttons for admin users -->
+        <?php if ($user_role === 'admin'): ?>
+            <a href="index.php?action=add" class="btn btn-success mb-3">Add Job</a>
+            <a href="auth/admin_dashboard.php" class="btn btn-light mb-3">Admin Dashboard</a>
+        <?php endif; ?>
+
+        <ul class="row list-unstyled"> <!-- Bootstrap grid row and list -->
+            <?php foreach ($jobs as $job): ?>
+            <li class="col-md-6 col-lg-4 mb-3">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h3 class="card-title"><?php echo htmlspecialchars($job['title']); ?></h3>
+                        <p class="card-text"><?php echo htmlspecialchars($job['company']); ?></p>
+
+                        <!-- Buttons with Bootstrap style -->
+                        <a href="job_details.php?id=<?php echo $job['id']; ?>" class="btn btn-primary">View Details</a> 
+
+                        <!-- Only show edit and delete for admin users -->
+                        <?php if ($user_role === 'admin'): ?>
+                            <a href="index.php?action=edit&id=<?php echo $job['id']; ?>" class="btn btn-warning">Edit</a>
+                            <a href="index.php?action=delete&id=<?php echo $job['id']; ?>" class="btn btn-danger">Delete</a>
+                        <?php endif; ?>
+                    </div>
+                </div>
+            </li>
+            <?php endforeach; ?>
+        </ul>
+
+        <?php
+        $pdo = connectDb();
+        $total_jobs = $pdo->query("SELECT COUNT(*) FROM jobs")->fetchColumn();
+        $total_pages = ceil($total_jobs / $limit);
+        ?>
+
+        <!-- Pagination Links --> 
+        <div class="pagination">
+            <?php if ($page > 1): ?>
+                <a href="index.php?page=<?php echo $page - 1; ?>">Previous</a>
+            <?php endif; ?>
+
+            <?php if ($page < $total_pages): ?>
+                <a href="index.php?page=<?php echo $page + 1; ?>">Next</a>
+            <?php endif; ?>
+        </div>
+
+        <!-- Logout button -->
+        <?php if (isset($_SESSION['user_id'])): ?>
+            <div style="margin-top: 40px; text-align: center;">
+                <a href="auth/logout.php" class="btn btn-danger">Logout</a>
+            </div>
+        <?php endif; ?>
+
+        <?php include 'includes/footer.php'; ?>
+    </div>
 <?php endif; ?>
 
-<?php
-     //Close the else statement
-    include 'includes/footer.php'; 
-?>
     

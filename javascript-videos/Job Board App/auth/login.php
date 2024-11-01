@@ -1,9 +1,14 @@
 <?php 
 session_start();
 
-require '../includes/functions.php'; 
+require '../includes/functions.php';
 $pdo = connectDb(); 
 $error = ''; 
+
+// Ensure the role is pulled from session if set, or default to 'user'
+$user_role = $_SESSION['role'] ?? 'user';
+//Debug
+//echo 'User Role Variable: ' . $user_role . '<br>';
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     //Get input from form
@@ -17,24 +22,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         //Check if user exists by username or emai
         $stmt = $pdo->prepare('SELECT * FROM users WHERE username = ? OR email =?'); 
         $stmt->execute([$username_or_email, $username_or_email]);
-        $user = $stmt->fetch(); 
-
-        //Debugg
-        //var_dump($user);
-        //exit();
+        $user = $stmt->fetch();
 
         //Verify password
         if ($user && password_verify($password, $user['password_hash'])) {
+            // Debugging: Confirm successful password verification
+            echo 'Password verified successfully.<br>';
+
             //Start a session and store user info
             $_SESSION['user_id'] = $user['id']; 
             $_SESSION['username'] = $user['username'];
             $_SESSION['role'] = $user['role'];   //Store role in session
 
+            //Debug
+            //echo 'Logged in with role: ' . $_SESSION['role'];
+            //exit();
+
             //Redirect to admin dashboard if admin, otherwise to main page
             if ($_SESSION['role'] === 'admin') {
                 header("Location: admin_dashboard.php"); 
             } else {
-                header("Location: index.php");
+                header("Location: index.php"); 
             }
             exit(); 
         } else {
