@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Callback Functions</title>
+    <style>
+        #container {
+            width: 500px;
+            height: 500px;
+            border: 1px dotted black;
+            background-image: url("space.png");
+            margin-bottom: 20px;
+            position: relative; /* Ensures #ship positions within the container */
+        }
+
+        #ship {
+            position: absolute;
+            width: 50px;
+            height: 50px;
+            top: 225px;
+            left: 225px;
+        }
+
+        button {
+            display: block;
+            width: 500px;
+            height: 30px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        #shipData {
+            font-weight: bold;
+            margin-top: 10px;
+        }
+    </style>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script>
+        $(function () {
+            $("body").click(function (event) {
+                let target = event.target.id;
+                switch (target) {
+                    case "btnUp":
+                        $("#ship").animate({
+                            top: "-=50",
+                            opacity: "0.8",
+                            width: "+=25px",
+                            height: "+=25px"
+                        }, 1000, function() { updatePosition(); });
+                        $("#ship").css("transform", "rotate(0deg)");
+                        break;
+                    case "btnDown":
+                        $("#ship").animate({
+                            top: "+=50",
+                            opacity: "1.0",
+                            width: "-=25px",
+                            height: "-=25px"
+                        }, 1000, function() { updatePosition(); });
+                        $("#ship").css("transform", "rotate(180deg)");
+                        break;
+                    case "btnLeft":
+                        $("#ship").animate({
+                            left: "+=50" // Move left by decreasing `left`
+                        }, 1000, function() { updatePosition(); });
+                        $("#ship").css("transform", "rotate(90deg)");
+                        break;
+                    case "btnRight":
+                        $("#ship").animate({
+                            left: "-=50" // Move right by increasing `left`
+                        }, 1000, function() { updatePosition(); });
+                        $("#ship").css("transform", "rotate(270deg)");
+                        break;
+                }
+            });
+        });
+
+        function updatePosition() {
+            // Updated Animation Complete Callback
+            let x = $("#ship").position().top;
+            let y = $("#ship").position().left; 
+            let out = "X: " + x + ", Y: " + y;
+            $("#shipData").html(out);
+        }
+    </script>
+</head>
+
+<body>
+    <div id="container">
+        <img src="ship.png" id="ship" />
+    </div>
+    <button id="btnUp">Up</button>
+    <button id="btnDown">Down</button>
+    <button id="btnLeft">Left</button>
+    <button id="btnRight">Right</button>
+    <div id="shipData">X: 225, Y: 225</div>
+</body>
+
+</html>
