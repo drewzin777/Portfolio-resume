@@ -64,10 +64,13 @@
                     $(this).css("background-color", "white");
                 });
 
-                $("input:last").focus(function(){
-                    $("p").slideDown();
-                }).blur(function(){
-                    $("p").slideUp();
+                $("input:last").change(function(){
+                    let pw = $("input:last").val();
+                    if(pw.length < 8){
+                        $("p").text("Your password must be 8 characters long.").show();
+                    } else {
+                        $("p").text("");
+                    }  
                 })
             }
         )
