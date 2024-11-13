@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>4.2 Forms Blur and Focus</title>
+    <title>4.4 The Submit Event</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
     </script>
     <style>
@@ -56,22 +56,24 @@
     </style>
     <script>
         $(
-            function(){
+            function() {
+                $("form").submit(function(){
+                    let un = $("input:first").val();
+                    let pw = $("input:last").val();
+                    console.log("UN: " + un + " PW: " + pw);
+                    $("#form").fadeOut(); 
+                });
+                
                 $("p").hide();
                 $("input").focus(function(){
                     $(this).css("background-color", "yellow");
                 }).blur(function(){
                     $(this).css("background-color", "white");
                 });
-
-                $("input:last").change(function(){
-                    let pw = $("input:last").val();
-                    if(pw.length < 8){
-                        $("p").text("Your password must be 8 characters long.").show();
-                    } else {
-                        $("p").text("");
-                    }  
-                })
+                
+                $("input:last").focus(function(){
+                    $("p").slideDown();
+                });
             }
         )
     </script>
