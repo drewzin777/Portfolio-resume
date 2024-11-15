@@ -23,15 +23,14 @@
     </style>
 </head>
 <body>
-    <label for="city">City</label>
+    <label for="city">City:</label>
     <input type="text" id="city"/><br>
     <button id="btnGetWeather">Get The Weather</button>
     <div id="out"></div>
     <script>
         $("#btnGetWeather").click(function(){
-            let city = $("#city").val();
-            let url = "https://community-open-weather13.p.rapidapi.com/weather?q=";
-            url += city + "&units=imperial";
+            let city = $("#city").val().trim();
+            let url = `https://openweather43.p.rapidapi.com/weather?q=${city}&units=imperial&appid=da0f9c8d90bde7e619c3ec47766a42f4`;
             const settings = {
                 "async": true, 
                 "crossDomain": true, 
@@ -40,13 +39,14 @@
                 "headers": {
                     "x-rapidapi-key":
                     "39bca05c02msh7bef38e0aaff330p150486jsn5edf0a53ef77",
-                    "x-rapidapi-host": "community-open-weather13.p.rapidapi.com"
+                    "x-rapidapi-host": "openweather43.p.rapidapi.com"
 
                 }
             };
 
             $.ajax(settings).done(function(response){
                 console.log(response); 
+
                 let out = "Temperature: " + response.main.temp + "F";
                 out += "<br>Feels like: " + response.main.feels_like + "F"; 
                 out += "<br>High Today: " + response.main.temp_max + "F"; 
