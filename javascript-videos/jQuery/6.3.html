@@ -2,69 +2,60 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>6.3 Adding JSON Data</title>
+    <title>6.3 Songs</title>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <style>
-        #song, #artist, #btnAdd {
+        #song, #artist, #btnAdd{
             font-size: 1.5em;
             font-family: Arial, Helvetica, sans-serif;
         }
-
-        #btnAdd {
+        #btnAdd{
             margin-top: 10px;
         }
-
-        table {
+        table{
             width: 400px;
             margin-top: 10px;
             border: 1px solid black;
             border-collapse: collapse;
         }
-
-        td, th {
+        td, th{
             border: 1px solid black;
-            text-align: left;
-            padding: 5px;
         }
     </style>
 </head>
 <body>
     <h1>Favorite Songs</h1>
-    <label for="song">Song:</label>
-    <input type="text" id="song" placeholder="Enter song name" />
-    <label for="artist">Artist:</label>
-    <input type="text" id="artist" placeholder="Enter artist name" />
-    <br><button id="btnAdd">Add Song</button>
-    <table id="songsTable">
-        <tr><th>Song</th><th>Artist</th></tr>
+    <label for="song">Song</label>
+    <input type="text" id="song"/>
+    <label for="artist">Artist</label>
+    <input type="text" id="artist"/>
+    <br/> <button id="btnAdd">Add Song</button>
+    <table>
+        <tr>
+            <th>Song</th>
+            <th>Artist</th>
+        </tr>
     </table>
     <script>
-        // Initialize an array to store song data
         let songs = [];
 
-        $("#btnAdd").click(function () {
-            let songName = $("#song").val().trim();
-            let songArtist = $("#artist").val().trim();
-
-            // Validate inputs
-            if (!songName || !songArtist) {
-                alert("Please enter both a song name and an artist.");
-                return;
-            }
-
-            // Add the song to the songs array
-            songs.push({ songName: songName, songArtist: songArtist });
-
-            // Clear input fields
-            $("#song").val('');
-            $("#artist").val('');
-
-            // Append a new row to the table
-            $("#songsTable").append(
-                `<tr><td>${songName}</td><td>${songArtist}</td></tr>`
-            );
+        $("#btnAdd").click(function(){
+            let song = $("#song").val();
+            let artist = $("#artist").val();
+            let data = [{songName: song, songArtist: artist}]
+            songs.push(data);
+            $("#song, #artist").val('');
+            $("table").html("<tr><th>Song</th><th>Artist</th></tr>");
+            console.log(songs);
+            $.each(songs, function(key, value){
+                let songName = value[0].songName;
+                let songArtist = value[0].songArtist;
+                $("table tr:last").after("<tr><td>" + songName + "</td><td>"+ songArtist + "</td></tr>");
+            });
         });
+
     </script>
 </body>
 </html>
