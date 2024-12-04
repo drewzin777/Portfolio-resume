@@ -45,3 +45,4 @@ function clearUI() {
     document.getElementById('frontCard').value = "";
     document.getElementById('backCard').value = "";
 }
+
