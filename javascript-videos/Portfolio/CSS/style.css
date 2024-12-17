@@ -47,6 +47,17 @@ body {
     font-size: 1.2rem;
   }
 
+  #about {
+    padding: 4rem 0;
+    background-color: #f9f9f9;
+  }
+
+  .container {
+    max-width: 1200px; 
+    margin: 0 auto; 
+    padding: 0 1.5rem; 
+  }
+
   .project-card {
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -106,14 +117,17 @@ body {
   }
   
   button:hover {
-    background: #003366;
+    background: #002244;
+    transform: scale(1.05);
+    transition: all 0.3s;
   }
 
   footer {
     text-align: center;
-    padding: 1rem;
-    background: #f0f0f0;
+    padding: 1rem 0;
+    background: #003366;
     font-size: 0.9rem;
+    color: white; 
   }
   
   @media (max-width: 768px) {
@@ -122,6 +136,17 @@ body {
     }
     nav {
       flex-direction: column;
+      text-align: center;
+    }
+
+    .project-card {
+      margin: 1rem auto; 
+      padding: 1.5rem; 
+      width: 90%;
+    }
+
+    form {
+      width: 90%
     }
   }
   
