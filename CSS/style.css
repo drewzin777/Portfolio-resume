@@ -48,14 +48,15 @@ body {
   }
 
   #about {
-    padding: 4rem 0;
-    background-color: #f9f9f9;
+    padding: 4rem 1rem;
+    background-color: #003366;
+    color: #fff;
   }
 
 /* Projects Section */
 #projects {
-  padding: 4rem 0; 
-  background-color: #fff;
+  padding: 4rem 1rem; 
+  background-color: #b5adad;
 }
 
 #projects h2 {
@@ -71,6 +72,8 @@ body {
   }
 
   .project-card {
+    width: 300px;
+    height: 450px;
     display: inline-block;
     border: 1px solid #ddd;
     border-radius: 8px;
@@ -79,17 +82,20 @@ body {
     margin: 1rem;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
     transition: transform 0.3s ease;
-    width: 100%; 
-    max-width: 400px;
+    overflow: hidden;
+  }
 
   .project-card:hover {
     transform: scale(1.05);
   }
 
   .project-card img {
-    max-width: 100%;
-    border-radius: 4px;
+    max-width: 300px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 8px;
     margin-bottom: 1rem;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   }
   
 .project-card a button {
