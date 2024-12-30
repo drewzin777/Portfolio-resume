@@ -113,6 +113,22 @@ body {
   transform: scale(1.05);
 }
 
+.project-card a.text-link {
+  display: block;
+  margin-top: 0.5rem;
+  text-decoration: none;
+  color: #00509e;
+  font-size: 0.9rem;
+  font-weight: normal;
+  transition: color 0.3s ease;
+  text-align: center;
+}
+
+.project-card a.text-link:hover {
+  color: #002244;
+  text-decoration: underline;
+}
+
   #contact {
     background-color: #f9f9f9;
     padding: 2rem;
