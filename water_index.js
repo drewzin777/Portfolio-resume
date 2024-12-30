@@ -97,13 +97,13 @@ document.getElementById('setReminder').addEventListener('click', function() {
 
 // Function to start reminder checks 
 let reminderInterval = null;
-function startReminderCheck() {
+function startReminderCheck(intervalMinutes = 30) {
     if (reminderInterval) {
         clearInterval(reminderInterval);
     }
     
-    // Start checking for reminders every 30 minutes (adjustable)
-    reminderInterval = setInterval(checkWaterReminder * 60 * 1000); // 60 min interval
+    // Start checking for reminders every interval minutes (adjustable)
+    reminderInterval = setInterval(checkWaterReminder, intervalMinutes * 60 * 1000); // 60 min interval
 }
 
 // Function to calculate water totals for multiple days and map to weekdays or dates
@@ -186,24 +186,34 @@ function updateMultiDayWaterProgressChart(days = 7) {
 document.getElementById('resetWater').addEventListener('click', function () {
     const today = moment().format('YYYY-MM-DD');
 
-    // Clear water entries and total for today
-    Lockr.set('waterEntries', []);
+   //Retrieve all water entries
+   let waterEntries = Lockr.get('waterEntries') || [];
+
+   //Filter out only today's entries
+   waterEntries = waterEntries.filter(entry => !entry.timestamp.startsWith(today));
+
+   //Save the updated entries back to storage
+   Lockr.set('waterEntries', waterEntries);
 
     // Reset the UI
     document.getElementById('dailyTotal').textContent = 'Total: 0 ml';
 
-    // Reset the chart
-    if (waterProgressChartInstance !== null) {
-        waterProgressChartInstance.destroy(); // Destroy chart before resetting
-    }
-
-    updateMultiDayWaterProgressChart(7); // Re-initialize for the last 7 days
+   //Update the chart
+    updateDailyTotal();
+    updateMultiDayWaterProgressChart(7); // Refresh the 7 day view
 
     alert('Water intake has been reset for today.');
 });
 
 // Initialize daily totals and chart on page load
 window.onload = function() {
+    const waterEntries = Lockr.get('waterEntries') || [];
+    if (waterEntries.length === 0) {
+        console.log("No water entries found. Start loggingh your water intake!");
+    } else {
+        console.log("Loaded water entries:", waterEntries);
+    }
+
     updateMultiDayWaterProgressChart(7);    // Initialize chart with 7-day view by default
     updateDailyTotal();                     // Update the daily total on page load
 };
