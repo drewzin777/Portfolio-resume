@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video JS</title>
+</head>
+<body>
+    <video>
+        <source src="airprot.mp4" />
+    </video>
+    <output id="timeOut">0</output>
+    <button id="btnPlay">Play</button>
+    <button id="btnStop">Stop</button>
+    <script>
+       let myVideo = document.getElementsByTagName("video");
+       myVideo = myVideo[0];
+
+       const btnPlay = document.getElementById("btnPlay"); 
+       const btnStop = document.getElementById("btnStop");
+       const btnPause = document.getElementById("btnStop");
+
+       let myInterval = setInterval(postTime, 1000);
+       
+
+       function postTime(e) {
+        let time = Math.round(myVideo.currentTime);
+            document.getElementById("timeOUt").innerHTML = "Time: " + time;
+       }
+
+       btnPlay.addEventListener("click", (e) => {
+        myVideo.play(); 
+
+        });
+
+       btnStop.addEventListener("click", (e) => {
+        myVideo.pause();
+        myVideo.currentTime = 0;
+       }); 
+
+       btnPause.addEventListener("click", (e) => {
+        myVideo.pause(); 
+
+        });
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Voting</title>
+</head>
+<body>
+    <div id="output"></div>
+
+    <script>
+        let age = 15; 
+        let citizen = true; 
+
+        if (age >= 18 && citizen == true) {
+            document.getElementById("output").innerHTML = "Your are eligible to vote!";
+        } else {
+            document.getElementById("output").innerHTML = "Your are not eligible to vote!";
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.3 Adding jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #effectsTarget{
+            background-color: #2175bc;
+            height: 300px;
+            width: 100%; 
+            margin-bottom: 20px;
+        }
+
+        #btnEffect {
+            height: 40px; 
+            width: 100%; 
+            font-size: 1.5em; 
+            font-weight: bold; 
+        }
+    </style>
+    <script>
+        let divVisible = true; 
+        $(function(){
+            $("#btnEffect").click(function(){
+                if(divVisible){
+                    $("#effectsTarget").fadeOut(3000); 
+                    divVisible = !divVisible;
+                } else
+            {
+                $("#effectsTarget").fadeIn(3000);
+                divVisible = !divVisible; 
+            }
+        });
+            
+    });
+    </script>
+</head>
+<body>
+    <div id="effectsTarget"></div>
+    <button id="btnEffect">Show Effect</button>
+</body>
+</html>

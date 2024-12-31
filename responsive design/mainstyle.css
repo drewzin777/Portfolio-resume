@@ -1,0 +1,49 @@
+ body {
+      border: 1px solid black;
+      padding: 10px;
+      font-family: Arial, Helvetica, sans-serif;
+     }
+
+ h1 {
+    text-align: center;
+ }
+
+    aside {
+            border: 1px solid black;
+            padding: 10px;
+            background-color: lightgray;
+            font-family: Arial, Helvetica, sans-serif;
+            clear: both;
+     }
+
+     #boeing737,
+     #boeing747,
+     #boeing757,
+     #boeing767,
+     #boeing777,
+     #boeing787,
+     #embraer,
+     #embraer2,
+     #airbus220,
+     #airbus320,
+     #airbus340,
+     #airbus350,
+     #airbus380 {
+        width: 300px;
+        height: 150px; 
+    }
+
+    .plane{
+        border: 1px solid gray;
+        padding: 10px;
+        margin: 10px;
+        background-color: lightslategray;
+    }
+
+    
+    @media only screen and (min-width: 800px) {
+        .plane {
+      width: 45%;
+      float: left
+    }
+}

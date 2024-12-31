@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math</title>
+    <style>
+        body {
+            font-family:'Times New Roman', Times, serif; 
+            font-size: large;
+            line-height: 25px;
+            color: slateblue;
+        }
+    </style>
+</head>
+<body>
+    <div id="output"></div>
+    <script>
+        let atBats = 300; 
+        let hits = 65; 
+        let singles = 50; 
+        let doubles = 5; 
+        let triples = 3; 
+        let homeruns = 7;
+        let walks = 22; 
+
+       let batAv = hits / (atBats - walks); 
+       let onBase = (hits + walks) / atBats; 
+       let totalBases = singles + (doubles * 2) + (triples * 3) + (homeruns * 4); 
+
+
+        //PEMDAS
+        console.log(batAv, onBase, totalBases);
+
+        document.getElementById("output").innerHTML = ` Batting Average: ${batAv} or 24%<br> On Base Percentage: ${onBase}<br> Total Bases: ${totalBases}`;
+
+    </script>
+</body>
+</html>

@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>3.5 Working with Element Content</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <style>
+        #container {
+            width: 80%; 
+            font-family: Arial, Helvetica, sans-serif;
+            font-size: .8em; 
+            border: 1px dotted black; 
+            padding: 15px; 
+        }
+
+        #container textarea {
+            width: 100%; 
+            height: 100px;
+        }
+    </style> 
+    <script>
+        $(
+            function(){
+                console.log($("#container").html());
+                $("#thoughts").keypress(function(){
+                    let text = $("#thoughts").val(); 
+                    console.log(text); 
+                    $("#container p:first").text(text);
+                })
+            }
+        );
+    </script>
+</head>
+<body>
+    <div id="container">
+        <h1>Lorem ipsum dolor sit amet</h1>
+        <p>Lorem ipsum dolor sit amet. Aut galisum rerum nam quia rerum qui totam velit. Qui praesentium omnis est odit amet est quos repellat cum veniam sapiente non dolor odio est deleniti repellat. Aut quaerat voluptatem qui odit internos et ipsum laudantium eos inventore adipisci vel ratione facilis. Non internos nostrum aut quia ipsam est possimus ullam et cupiditate impedit.</p>
+
+        <p>Lorem ipsum dolor sit amet. Aut galisum rerum nam quia rerum qui totam velit. Qui praesentium omnis est odit amet est quos repellat cum veniam sapiente non dolor odio est deleniti repellat. Aut quaerat voluptatem qui odit internos et ipsum laudantium eos inventore adipisci vel ratione facilis. Non internos nostrum aut quia ipsam est possimus ullam et cupiditate impedit.</p>
+        <h2>What Do You Think?</h2>
+        <textarea id="thoughts"></textarea>
+    </div>
+    
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Async Functions</title>
+    <style>
+        body {
+            font-family:Arial, Helvetica, sans-serif; 
+            margin: 0; 
+            padding: 0; 
+            display: flex; 
+            justify-content: center;
+            align-items: center; 
+            height: 100vh; 
+            background-color: #f0f0f0;
+        }
+
+        #output {
+            width: 80%; 
+            max-width: 600px;
+            background: cornflowerblue; 
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 0 10px black;
+            margin-left: 10px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 5px; 
+        }
+
+        .form-group input{
+            width: 100%; 
+            padding: 10px; 
+            box-sizing: border-box;
+        }
+
+        #results {
+            list-style: none; 
+            padding: 0; 
+        }
+
+        #results li {
+            padding: 10px; 
+            border-bottom: 1px solid cornflowerblue;
+        }
+
+        button {
+            background-color: cornflowerblue;
+            padding: 10px; 
+            margin-left: 10px;
+            border-radius: 10px;
+            
+        }
+    </style>
+</head>
+<body>
+    <div id="output">
+        <div class ="form-group">
+            <label for ="movieTitle">Enter movie title</label>
+            <input type="text" id="movieTitle">
+        </div>
+    </div>
+    <button onclick="searchMovie()">Search</button>
+    <ul id="results"></ul>
+    <script src="async.js"></script>
+</body>
+</html>

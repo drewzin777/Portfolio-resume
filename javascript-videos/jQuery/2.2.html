@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>1.3 Adding jQuery</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <style>
+        #container {
+            display: flex; /* Aligns child elements in a row */
+            gap: 20px; /* Adds space between boxes */
+            margin-bottom: 20px;
+        }
+
+        #effectsTargetA, #effectsTargetB, #effectsTargetC {
+            height: 200px;
+            width: 300px; 
+        }
+
+        #effectsTargetA {
+            background-color: #2175bc;
+        }
+
+        #effectsTargetB {
+            background-color: #a4a6aa;
+        }
+
+        #effectsTargetC {
+            background-color: #da8f15;
+        }
+
+        #button-container {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 20px; 
+        }
+
+        button {
+            padding: 8px 16px; /* Smaller button size */
+            font-size: 1em; /* Adjust font size */
+            font-weight: bold; 
+        }
+    </style>
+    <script>
+        $(function(){
+            $("body").click(function(event){
+                let target = event.target.id;
+                console.log(target);
+                switch(target){
+                    case "btnEffectBlue":
+                        $("#effectsTargetA").hide(); 
+                        break;
+                    case "btnEffectGray": 
+                        $("#effectsTargetB").hide();
+                        break; 
+                    case "btnEffectOrange": 
+                        $("#effectsTargetC").hide();
+                        break;
+                    case "btnEffectShowAll":
+                        $("#effectsTargetA").show();
+                        $("#effectsTargetB").show();
+                        $("#effectsTargetC").show();
+                        break;
+                }
+        });    
+    });
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div id="effectsTargetA"></div> 
+        <div id="effectsTargetB"></div> 
+        <div id="effectsTargetC"></div>
+        <div class="clear"></div>
+    </div>
+    <div class="container"></div>
+        <button id="btnEffectBlue">Hide Blue</button>
+        <button id="btnEffectGray">Hide Gray</button> 
+        <button id="btnEffectOrange">Hide Orange</button> 
+        <button id="btnEffectShowAll">Show All</button>
+    </div>
+    
+</body>
+</html>

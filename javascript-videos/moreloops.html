@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>More Loops</title>
+</head>
+<body>
+    <script>
+     //palindrome check 
+
+     let str = "homerun"; 
+     let isPalindrome = true; 
+     for (let i = 0; i < str.length / 2; i++) {
+        if(str[i] !== str[str.length - 1 - i]) {
+            isPalindrome = false; 
+            break;
+        }
+     }
+     console.log(isPalindrome ? `${str} is a palindrome` : `${str} is not a palindrome`);
+     
+    </script>
+</body>
+</html>

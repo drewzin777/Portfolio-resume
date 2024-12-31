@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>5.4 The Submit Event</title>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js">
+    </script>
+    <style>
+        #container{
+            display: flex; 
+        }
+
+        #result {
+           padding-left: 20px;
+        }
+
+        textarea {
+            width: 500px; 
+            height: 500px; 
+            background-color: #fcfcfc;
+            border: 1px solid black; 
+        }
+    </style>
+    <script>
+        $(
+            function() {
+                $("textarea").on("keydown", function(event){
+                    console.log("Key Down");
+                    let myKey = event.key;
+                    $("output").append("You Pressed: " + myKey + "<br>");
+                    if(myKey == "Escape"){
+                        $("output").html("");
+                    }
+                }).on("keypress", function(){
+                    console.log("Key Pressed");
+                }).on("keyup", function(){
+                    console.log("Key Up");
+                });
+            }
+        )
+    </script>
+</head>
+<body>
+    <div id="container">
+        <div id="textarea">
+            <textarea></textarea>
+        </div>
+        <div id="result"></div>
+    </div>
+    
+</body>
+</html>

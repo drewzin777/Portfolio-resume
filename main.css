@@ -1,0 +1,23 @@
+#main {
+}
+
+#Westport, #Trumbull, #Fairfield, #Stamford {
+    border: 1px solid black; 
+    width: 600px;
+    margin: 5px 5px 5px 5px; 
+    padding: 10px 10px 10px 10px;
+    float: left; 
+}
+
+#Trumbull {
+    float: right;
+}
+
+#Fairfield {
+    float: right; 
+}
+
+img {
+    width:  600px; 
+    height: 400px;
+}

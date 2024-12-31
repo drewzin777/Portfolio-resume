@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coffee Order Form</title>
+    <style>
+        #parentContainer {
+            border: 1px solid brown;
+            background-color: tan;
+            padding: 10px;
+            font-size: 20px;
+            color: brown; 
+            font-family: Arial, Helvetica, sans-serif;
+        }
+
+        h1 {
+            text-align: center;
+            text-decoration: underline;
+            padding-bottom: 50px;
+        }
+
+       #firstName, #lastName {
+        width: 98%;
+        padding: 8px;
+       }
+       
+        #phone {
+           margin: 25px;
+        }
+
+        #here {
+            margin: 25px;
+        }
+
+        #size {
+            margin: 25px;
+        }
+
+        #kind {
+            margin: 25px;
+        }
+
+    button {
+            width: 98%;
+            margin: 20px; 
+            padding: 10px; 
+            font-size: 2em; 
+            background-color: chocolate;
+            border-radius: 10px
+        }
+    </style>
+</head>
+<body>
+    <div id="parentContainer">
+        <h1>Buckstars</h1>
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" /><br>
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" /><br>
+        <label for="phone">Phone Number(for text)</label>
+        <input type="number" id="phone" placeholder="(###)###-####"/><br>
+        <label for="here">Here</label>
+        <input type="radio" id="here" name="choice"></input>
+        <label for="toGo">To-go</label>
+        <input type="radio" id="toGo" name="choice"></input>
+        <label for="tempe">Hot</label>
+        <input type="radio" id="temp" name="temp"></input> 
+        <label for="tempe">Iced</label> 
+        <input type="radio" id="temp" name="temp"></input><br>
+        <label for="size">Coffee size</label>
+        <input type="checkbox" id="size" value="sm" />Small 
+        <input type="checkbox" id="size" value="m" />Med
+        <input type="checkbox" id="size" value="lg" />Lg
+        <input type="checkbox" id="size" value="xlg" />Xlg<br>
+        <label for="kind of coffee"></label>
+        <input type="checkbox" id="kind" value="regular" />Regular 
+        <input type="checkbox" id="kind" value="decalf" />Decalf
+        <input type="checkbox" id="kind" value="50/50" />50/50<br>
+
+        <select name="sweetener" id="sweetener">
+            <option value="sugar">Sugar</option> 
+            <option value="sugar">Splenda</option>
+            <option value="sugar">Equal</option> 
+            <option value="sugar">Sweet n'Low</option> 
+            <option value="sugar">Stevia</option> 
+            <option value="sugar">Honey</option>
+        </select><br>
+
+        <button id="submit">Submit</button>
+    </div>
+    
+</body>
+</html>

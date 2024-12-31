@@ -1,0 +1,1 @@
+This was a project about learning how to parse XML data. Starting with a basic text XML file, and than using JavaScript to fetch the XML data so it could be displayed or used.  Once the data was fetched, a for loop was used to loop through the content. A table was also created for display. 

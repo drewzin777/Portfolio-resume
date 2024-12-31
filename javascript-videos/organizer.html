@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Personal Organizer</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+     integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+     crossorigin=""/>
+     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+     integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+     crossorigin=""></script>
+
+     <!-- Flatpickr CSS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
+    <style>
+        /* prevent horixontal scrolling */ 
+        html {
+            overflow-x: hidden;
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            overflow-y: auto;
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0; 
+            padding: 20px; 
+            max-width: 100%;
+        }
+
+       h1, h2 {
+        color: rgb(19, 17, 17); 
+        text-align: center;
+       }
+
+       form {
+        background-color: lightslategray;
+        padding: 20px; 
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1); 
+        max-width: 100%; 
+        margin: 20px auto; 
+       }
+
+       label {
+            display: block; 
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            color: rgb(54, 46, 46); 
+        }
+
+        input[type="text"], input[type="date"], input[type="time"], textarea {
+            width: 100%;
+            padding: 10px; 
+            margin-bottom: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            margin-right: 10px; 
+            box-sizing: border-box;
+        }
+
+        button[type="submit"] {
+            background-color: #f44336;
+            color: white; 
+        }
+
+        #eventList {
+            margin: 20px auto; 
+            padding: 0; 
+            list-style: none; 
+        }
+
+        .event-item:hover{
+            background-color: lightslategray;
+        }
+
+        .event-item {
+            background-color: whitesmoke;
+            padding: 15px; 
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            margin-bottom: 10px; 
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+            box-sizing: border-box;
+        }
+
+        .event-item strong {
+            display: block; 
+            margin-bottom: 5px; 
+            font-size: 1.1em;
+        }
+
+        .delete-btn {
+            background-color: #f44336;
+            color: white; 
+            border: none; 
+            padding: 5px 10px; 
+            border-radius: pointer; 
+            float: right; 
+        }
+
+        .delete-btn:hover {
+            background-color: #d32f2f;
+        }
+
+        .edit-btn {
+            background-color: #4c89af;
+            color: white; 
+            border: none; 
+            padding: 5px 10px; 
+            cursor: pointer; 
+            float: right; 
+            margin-left: 10px; 
+        }
+
+        .edit-btn:hover {
+            background-color: #111f7c; 
+        }
+
+        #searchForm {
+            width: 100%;
+            background-color: lightslategrey;
+            padding: 20px; 
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            max-width: 100%;
+            margin: 20px auto; 
+        }
+
+        #searchForm label {
+            display: block;
+            margin-bottom: 5px; 
+            font-weight: bold; 
+            color: rgb(54, 46, 46);
+        }
+
+        #searchForm input[type="text"], #searchForm input[type="date"] {
+            width: 100%;
+            padding: 10px; 
+            margin-bottom: 10px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+            box-sizing: border-box;
+        }
+
+        #searchForm button {
+            padding: 10px 15px; 
+            border: none;
+            border-radius: 4px;
+            cursor: pointer; 
+            background-color: #f44336;
+            color: white; 
+        }
+        
+        #map {
+            height: 400px;  
+            max-width: 96%;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        /* responsive styles*/
+        @media (max-width: 480px) {
+            body {
+                overflow-x: hidden;
+                padding: 10px; 
+            }
+
+            #searchForm {
+                padding: 15px; 
+                margin: 10px auto;
+                width: 90%;
+            }
+
+            #searchForm label {
+                font-size: 0.9em;
+            }
+
+            #searchForm input[type="text"], 
+            #searchForm input[type="date"] {
+                padding: 8px; 
+                font-size: 0.9em;
+            }
+
+            #searchForm button {
+                padding: 8px 12px; 
+                font-size: 0.9em; 
+            }
+
+            form, #searchForm, #eventList, #map {
+                max-width: 100%; 
+                padding: 10px;
+                margin: 0 auto;
+            }
+
+            input [type="text"], input [type="date"], input [type="time"], input [type="text"], textarea, button, #searchForm input[type="text"], #searchForm input[type="date"] {
+                padding: 8px; 
+                font-size: 14px; 
+            }
+
+            button[type="submit"], .delete-btn, .edit-btn {
+                padding: 8px 12px; 
+                font-size: 14px;
+            }
+
+            .event-item { 
+                padding: 10px; 
+                font-size: 14px;
+            }
+
+            #map {
+                height: 300px; 
+                margin: 10px auto; 
+                width: 100%;
+            }
+        }
+
+        @media (min-width: 768px) {
+            form, #searchForm, #eventList, #map {
+                max-width: 600px;
+            }
+        }
+
+        @media (min-width: 1024px) {
+            form, #searchForm, #eventList, #map {
+                max-width: 800px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Personal Organizer</h1>
+
+    <form id="eventForm">
+        <label for="eventName">Event Name:</label>
+        <input type="text" id="eventName" required><br>
+
+        <label for="eventDate">Date:</label> 
+        <input type="date" id="eventDate" required><br>
+
+        <label for="eventTime">Time:</label>
+        <input type="time" id="eventTime" required><br>
+
+        <label for="eventLocation">Location:</label>
+        <input type="text" id="eventLocation" required><br>
+
+        <label for="eventNotes">Notes:</label>
+        <textarea id="eventNotes"></textarea><br>
+
+        <button type="submit">Add Event</button>
+        </form>
+
+        <h2>Search Events</h2>
+    <form id="searchForm">
+        <label for="searchName">Event Name:</label> 
+        <input type="text" id="searchName"><br>
+
+        <label for="searchDate">Date:</label>
+        <input type="date" id="searchDate"><br>
+
+        <lavel for="searchLocation">Location:</lavel>
+        <input type="text" id="searchLocation"><br>
+
+        <button type="submit">Search</button>
+
+    </form>
+        
+        <div id="map" style="height: 400px; margin: 20px auto; max-width: 400px;"></div>
+        
+
+
+        <h2>Event List</h2>
+        <ul id="eventList"></ul>
+    
+    <script src="organizer.js"></script>
+     <!-- Flatpickr JS -->
+     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() { 
+            flatpickr("#eventTime", {
+                enableTime: true,
+                noCalendar: true, 
+                dateFormat: "h:i K",    //12-hour format 
+                time_24hr: false       //disable 24-hour format
+        });
+    });
+    </script>
+</body>
+</html>

@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Public Tronsportation Sim</title>
+    <style>
+        body {
+            font-family: Arial, Helvetica, sans-serif;
+            background-color: #f4f4f4;
+            color: #333;
+            border: 2px solid orange;
+            padding: 20px;
+            margin: 0;
+            display: flex; 
+            flex-direction: column;
+            align-items: center;
+        }
+
+        h1 { 
+            color: #ff6600; 
+            margin-bottom: 20px;
+        }
+
+        .container {
+            background: #fff;
+            padding: 20px; 
+            border-radius: 8px; 
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            width: 100%; 
+            max-width: 600px; 
+            margin-bottom: 20px; 
+        }
+
+        label { 
+            font-weight: bole; 
+            margin-bottom: 5px; 
+            display: block; 
+        }
+
+        input[type="text"] {
+            width: calc(100 - 20px); 
+            padding: 10px; 
+            margin-bottom: 15px; 
+            border: 1px solid #ccc; 
+            border-radius: 4px; 
+        }
+
+        button {
+            background-color: #ff6600; 
+            color: white; 
+            padding: 10px 15px; 
+            border: none; 
+            border-radius: 4px;
+            cursor: pointer; 
+            margin-right: 5px; 
+            font-weight: bold;
+        }
+
+        button:hover {
+            background-color: #e55b00;
+        }
+
+      #passengerName, 
+      #passengerAge,
+      #passengerDestination {
+        width: 97%;
+        padding: 8px;
+        margin-left: 5px;
+        margin-bottom: 15px;
+       }
+
+       ul { 
+        list-style: none;
+       }
+
+       li button:hoover {
+        background-color: #005bb5;
+       }
+    </style>
+</head>
+<body>
+    <h1>Public Transportation Simulation</h1>
+    <div>
+        <h2>Add Passenger</h2>
+        <label for="passengerName">Name:</label><br>
+        <input type="text" id="passengerName"><br>
+        <label for="passengerAge">Age:</label><br>
+        <input type="text" id="passengerAge"><br>
+        <label for="passengerDestination">Destination:</label><br>
+        <input type="text" id="passengerDestination"><br>
+        <button id="addPassengerBtn" onClick="addPassengerToVehicle(0)">Add Passenger to vehicle</button><br>
+    </div>
+
+    <div>
+        <h2>Vehicle Info</h2>
+        <ul id="vehicleList"></ul>
+    </div>
+
+    <script src="classes2.js"></script>
+</body>
+</html>
+
+   
+
+   

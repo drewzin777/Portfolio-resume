@@ -1,0 +1,26 @@
+#col1 {
+    text-align: center;
+    width: 45%; 
+    float: left; 
+}
+
+#col2 {
+    text-align: center;
+    width: 45%; 
+    float: right; 
+}
+
+img {
+    width: 580px; 
+    height: 400px;
+}
+
+h1 {
+    text-align: center;
+    margin: 0 auto;
+    margin-top: 0px;
+}
+
+p {
+    line-height: 1.5em;
+}
